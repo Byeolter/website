@@ -109,10 +109,12 @@
     <!-- NAV -->
     <div style="position:sticky;top:0;z-index:40">
       <nav style="position:relative;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:16px clamp(16px,4vw,40px);border-bottom:3px solid #000;background:#0d0d28;box-shadow:0 3px 0 #ffd23f">
-        <a href="#top" style="display:flex;align-items:center;gap:10px;text-decoration:none;color:#eaf0ff">
-          <img src="/assets/star.png" alt="Byeolter star" width="26" height="26" style="display:block">
-          <span style="font-family:'Press Start 2P','Galmuri11',monospace;font-size:13px;color:#ffd23f;letter-spacing:1px">BYEOLTER</span>
-        </a>
+        <div style="display:flex;align-items:center;gap:10px">
+          <img id="btn-cursor" src="/assets/star.png" alt="Byeolter star" width="26" height="26" style="display:block;cursor:pointer">
+          <a href="#top" style="text-decoration:none">
+            <span style="font-family:'Press Start 2P','Galmuri11',monospace;font-size:13px;color:#ffd23f;letter-spacing:1px">BYEOLTER</span>
+          </a>
+        </div>
         <div style="display:flex;align-items:center;gap:26px" data-nav-desktop="">
           <a href="/apps/" style="font-family:'Press Start 2P','Galmuri11',monospace;font-size:9px;color:#4fe0d8;text-decoration:none">APPS</a>
           <a href="/games/" style="font-family:'Press Start 2P','Galmuri11',monospace;font-size:9px;color:#ff5db1;text-decoration:none">GAMES</a>
@@ -315,6 +317,20 @@ if (location.hash && location.hash.length > 1) {
     if (el) window.scrollTo(0, el.getBoundingClientRect().top + window.scrollY);
   }));
 }
+
+// ── Star cursor toggle ─────────────────────────────────────
+(function() {
+  let customCursor = false;
+  const style = document.createElement('style');
+  style.id = 'star-cursor-style';
+  document.head.appendChild(style);
+  document.getElementById('btn-cursor').addEventListener('click', () => {
+    customCursor = !customCursor;
+    style.textContent = customCursor
+      ? "* { cursor: url('https://cdn.cursors-4u.net/previews/starry-sun-c5238d99-32.webp') 32 32, auto !important; }"
+      : '';
+  });
+})();
 
 // ── Nav menu ───────────────────────────────────────────────
 document.getElementById('btn-menu').addEventListener('click', () => {
