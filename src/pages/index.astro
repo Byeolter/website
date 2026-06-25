@@ -65,11 +65,11 @@
           <img src="/assets/crt.png" alt="Retro CRT computer" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:calc(1 - (var(--p) - .34) * 3.2)">
           <div style="position:absolute;left:9.5%;top:27.8%;width:80.5%;height:33.6%;overflow:hidden;background:linear-gradient(180deg,#08140d 0%,#040a07 100%)">
             <div style="position:absolute;inset:0;padding:7% 7% 7% 8%;display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-start;gap:1vh;opacity:calc(1 - (var(--p) - .42) * 3.2)">
-              <div id="crt-l0" style="font-family:'VT323','Galmuri11',monospace;font-size:1.9vh;line-height:1.02;color:#6cff9b;text-shadow:0 0 6px rgba(108,255,155,.55)">BYEOLTER OS [Version 1.0]</div>
-              <div id="crt-l1" style="font-family:'VT323','Galmuri11',monospace;font-size:1.9vh;line-height:1.02;color:#39b86a;text-shadow:0 0 5px rgba(57,184,106,.4)">(C) 2026 BYEOLTER STUDIO · SEOUL</div>
-              <div id="crt-l2" style="font-family:'VT323','Galmuri11',monospace;font-size:1.9vh;line-height:1.02;color:#6cff9b;text-shadow:0 0 6px rgba(108,255,155,.55)">&gt; LOADING SMALL MAGIC<span style="animation:blink 1s steps(1) infinite">_</span></div>
-              <div id="crt-l3" style="font-family:'Press Start 2P','Galmuri11',monospace;font-size:2.6vh;line-height:1.2;color:#7dffae;text-shadow:0 0 10px rgba(108,255,155,.7);margin:.8vh 0 .3vh;letter-spacing:.2vh">✦ BYEOLTER</div>
-              <div id="crt-l4" style="font-family:'VT323','Galmuri11',monospace;font-size:1.9vh;line-height:1.02;color:#6cff9b;text-shadow:0 0 6px rgba(108,255,155,.55)"><span style="animation:blink 1s steps(1) infinite">▶</span> SCROLL TO BOOT <span style="animation:blink 1s steps(1) infinite">▮</span></div>
+              <div id="scr-l0" style="font-family:'VT323','Galmuri11',monospace;font-size:1.9vh;line-height:1.02;color:#6cff9b;text-shadow:0 0 6px rgba(108,255,155,.55)">BYEOLTER OS [Version 1.0]</div>
+              <div id="scr-l1" style="font-family:'VT323','Galmuri11',monospace;font-size:1.9vh;line-height:1.02;color:#39b86a;text-shadow:0 0 5px rgba(57,184,106,.4)">(C) 2026 BYEOLTER STUDIO · SEOUL</div>
+              <div id="scr-l2" style="font-family:'VT323','Galmuri11',monospace;font-size:1.9vh;line-height:1.02;color:#6cff9b;text-shadow:0 0 6px rgba(108,255,155,.55)">&gt; LOADING SMALL MAGIC<span style="animation:blink 1s steps(1) infinite">_</span></div>
+              <div id="scr-l3" style="font-family:'Press Start 2P','Galmuri11',monospace;font-size:2.6vh;line-height:1.2;color:#7dffae;text-shadow:0 0 10px rgba(108,255,155,.7);margin:.8vh 0 .3vh;letter-spacing:.2vh">✦ BYEOLTER</div>
+              <div id="scr-l4" style="font-family:'VT323','Galmuri11',monospace;font-size:1.9vh;line-height:1.02;color:#6cff9b;text-shadow:0 0 6px rgba(108,255,155,.55)"><span style="animation:blink 1s steps(1) infinite">▶</span> SCROLL TO BOOT <span style="animation:blink 1s steps(1) infinite">▮</span></div>
             </div>
             <div style="position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(0,0,0,.34) 0 2px,rgba(0,0,0,0) 2px 4px)"></div>
             <div style="position:absolute;inset:0;pointer-events:none;box-shadow:inset 0 0 6vh rgba(0,0,0,.8), inset 0 0 1.5vh rgba(108,255,155,.12)"></div>
@@ -345,11 +345,11 @@ if (location.hash && location.hash.length > 1) {
 // ── CRT screen easter egg ──────────────────────────────────
 (function() {
   const lines = [
-    { id: 'crt-l0', text: 'BYEOLTER OS [Version 1.0]' },
-    { id: 'crt-l1', text: '(C) 2026 BYEOLTER STUDIO · SEOUL' },
-    { id: 'crt-l2', text: '> LOADING SMALL MAGIC_' },
-    { id: 'crt-l3', text: '✦ BYEOLTER' },
-    { id: 'crt-l4', text: '▶ SCROLL TO BOOT ▮' },
+    { id: 'scr-l0', text: 'BYEOLTER OS [Version 1.0]' },
+    { id: 'scr-l1', text: '(C) 2026 BYEOLTER STUDIO · SEOUL' },
+    { id: 'scr-l2', text: '> LOADING SMALL MAGIC_' },
+    { id: 'scr-l3', text: '✦ BYEOLTER' },
+    { id: 'scr-l4', text: '▶ SCROLL TO BOOT ▮' },
   ];
   let activeId = null;
 
