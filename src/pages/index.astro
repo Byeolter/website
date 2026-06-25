@@ -241,6 +241,15 @@
 </div>
 
 <script>
+// Prevent Chrome from restoring mid-page scroll position
+history.scrollRestoration = 'manual';
+window.scrollTo(0, 0);
+
+// Reset state when restored from BFCache (back/forward navigation)
+window.addEventListener('pageshow', function(e) {
+  if (e.persisted) window.scrollTo(0, 0);
+});
+
 // ── Sky stars ──────────────────────────────────────────────
 (function() {
   const sky = document.getElementById('sky');
