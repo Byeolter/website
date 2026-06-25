@@ -1,29 +1,515 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
+// Byeolter Landing Page
 ---
-<BaseLayout>
-  <section class="hero">
-    <div class="star">⭐</div>
-    <h1>Byeolter</h1>
-    <p class="lead">Apps, games, and AI experiences with a little bit of magic.</p>
-    <p class="desc">
-      Byeolter is an independent studio building thoughtful digital experiences —
-      from mobile apps to playful games and AI-powered tools.
-    </p>
-  </section>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Byeolter — indie app &amp; game studio. Seoul.">
+<title>Byeolter</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/galmuri/dist/galmuri.css" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  img{image-rendering:pixelated}
+  ::selection{background:#ff5db1;color:#0a0a1f}
+  @keyframes twpix{0%,100%{opacity:.2}50%{opacity:1}}
+  @keyframes blink{0%,49%{opacity:1}50%,100%{opacity:0}}
+  @keyframes hop{0%{transform:translateY(0)}100%{transform:translateY(-12px)}}
+  @keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+  @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
+  @keyframes glstatic{0%{background-position:0 0}100%{background-position:0 9px}}
+  @keyframes gljit{0%,100%{transform:translateX(0)}20%{transform:translateX(-4px)}40%{transform:translateX(3px)}60%{transform:translateX(-2px)}80%{transform:translateX(5px)}}
+  @keyframes glbars{0%{transform:translateY(-12%)}100%{transform:translateY(12%)}}
+  @keyframes glflick{0%,100%{opacity:.85}50%{opacity:.35}}
+  @keyframes riseIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+  @property --p{syntax:'<number>';inherits:true;initial-value:0}
+  @media (max-width:760px){
+    [data-nav-desktop]{display:none !important}
+    [data-nav-burger]{display:flex !important}
+  }
+</style>
+</head>
+<body>
+<div style="position:relative;min-height:100vh;background:radial-gradient(120% 80% at 50% -10%, #1a1140 0%, rgba(26,17,64,0) 55%), #0a0a1f;color:#eaf0ff;font-family:'VT323','Galmuri11',monospace">
 
-  <section class="cards">
-    <article class="card">
-      <h2>별보는 고양이</h2>
-      <p>A magical fortune app coming soon.</p>
-    </article>
-    <article class="card">
-      <h2>Games</h2>
-      <p>Small, playful experiments and interactive worlds.</p>
-    </article>
-    <article class="card">
-      <h2>AI</h2>
-      <p>Useful AI experiences made for everyday life.</p>
-    </article>
-  </section>
-</BaseLayout>
+  <div id="sky" style="position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:1"></div>
+
+  <!-- STAR RUNNER GAME -->
+  <div id="game-overlay" style="position:fixed;inset:0;z-index:120;background:rgba(4,4,12,.97);display:none;flex-direction:column;font-family:'Press Start 2P','Galmuri11',monospace">
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px clamp(14px,4vw,28px);border-bottom:3px solid #000;background:#0d0d28">
+      <span style="display:flex;align-items:center;gap:10px;font-size:11px;color:#ffd23f;letter-spacing:1px"><img src="/assets/star.png" width="20" height="20" alt=""> STAR RUNNER</span>
+      <button id="btn-close-game" aria-label="Close" style="font-family:'Press Start 2P','Galmuri11',monospace;font-size:9px;color:#0a0a1f;background:#ff5db1;border:3px solid #000;box-shadow:3px 3px 0 #000;padding:9px 12px;cursor:pointer">✕ ESC</button>
+    </div>
+    <div style="flex:1;position:relative;min-height:0">
+      <canvas id="game-canvas" style="position:absolute;inset:0;width:100%;height:100%;display:block;image-rendering:pixelated;touch-action:none"></canvas>
+    </div>
+    <div style="text-align:center;padding:10px;font-family:'VT323',monospace;font-size:18px;letter-spacing:1px;color:#8089c0;border-top:3px solid #000;background:#0d0d28">SPACE / TAP = JUMP · ESC = EXIT</div>
+  </div>
+
+  <div style="position:relative;z-index:5">
+
+    <!-- HERO CRT DIVE-IN -->
+    <div id="track" style="position:relative;height:300vh">
+      <div id="stage" style="--p:0;position:sticky;top:0;height:100vh;overflow:hidden;background:#050507">
+
+        <div style="position:absolute;inset:0;z-index:0;opacity:calc(1 - var(--p) * 2.6);background:radial-gradient(80% 60% at 50% 42%, #15131c 0%, #050507 70%)"></div>
+
+        <!-- DEVICE -->
+        <div style="position:absolute;left:50%;top:50%;height:min(94vh,167vw);aspect-ratio:486/864;transform:translate(-50%,-50%) scale(calc(1 + var(--p) * 4.1));transform-origin:52.5% 45.5%;z-index:2;will-change:transform">
+          <img src="/assets/crt.png" alt="Retro CRT computer" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:calc(1 - (var(--p) - .34) * 3.2)">
+          <div style="position:absolute;left:9.5%;top:27.8%;width:80.5%;height:33.6%;overflow:hidden;background:linear-gradient(180deg,#08140d 0%,#040a07 100%)">
+            <div style="position:absolute;inset:0;padding:7% 7% 7% 8%;display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-start;gap:1vh;opacity:calc(1 - (var(--p) - .42) * 3.2)">
+              <div style="font-family:'VT323',monospace;font-size:1.9vh;line-height:1.02;color:#6cff9b;text-shadow:0 0 6px rgba(108,255,155,.55)">BYEOLTER OS [Version 1.0]</div>
+              <div style="font-family:'VT323',monospace;font-size:1.9vh;line-height:1.02;color:#39b86a;text-shadow:0 0 5px rgba(57,184,106,.4)">(C) 2026 BYEOLTER STUDIO · SEOUL</div>
+              <div style="font-family:'VT323',monospace;font-size:1.9vh;line-height:1.02;color:#6cff9b;text-shadow:0 0 6px rgba(108,255,155,.55)">&gt; LOADING SMALL MAGIC<span style="animation:blink 1s steps(1) infinite">_</span></div>
+              <div style="font-family:'Press Start 2P','Galmuri11',monospace;font-size:2.6vh;line-height:1.2;color:#7dffae;text-shadow:0 0 10px rgba(108,255,155,.7);margin:.8vh 0 .3vh;letter-spacing:.2vh">✦ BYEOLTER</div>
+              <div style="font-family:'VT323',monospace;font-size:1.9vh;line-height:1.02;color:#6cff9b;text-shadow:0 0 6px rgba(108,255,155,.55)"><span style="animation:blink 1s steps(1) infinite">▶</span> SCROLL TO BOOT <span style="animation:blink 1s steps(1) infinite">▮</span></div>
+            </div>
+            <div style="position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(0,0,0,.34) 0 2px,rgba(0,0,0,0) 2px 4px)"></div>
+            <div style="position:absolute;inset:0;pointer-events:none;box-shadow:inset 0 0 6vh rgba(0,0,0,.8), inset 0 0 1.5vh rgba(108,255,155,.12)"></div>
+            <div style="position:absolute;top:0;left:0;right:0;height:44%;pointer-events:none;background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,0))"></div>
+          </div>
+        </div>
+
+        <!-- GLITCH -->
+        <div style="position:absolute;inset:0;z-index:4;pointer-events:none;mix-blend-mode:screen;opacity:min(calc((var(--p) - .48) * 6),calc((.82 - var(--p)) * 6));animation:gljit .14s steps(2) infinite">
+          <div style="position:absolute;inset:-4% 0;background:repeating-linear-gradient(0deg, rgba(108,255,155,0) 0 2px, rgba(108,255,155,.22) 2px 3px, rgba(0,0,0,.35) 3px 6px);animation:glstatic .1s steps(3) infinite"></div>
+          <div style="position:absolute;inset:0;background:linear-gradient(180deg, rgba(108,255,155,0) 0%, rgba(108,255,155,.18) 48%, rgba(80,255,210,.1) 52%, rgba(108,255,155,0) 100%);animation:glbars .22s steps(4) infinite, glflick .12s steps(2) infinite"></div>
+          <div style="position:absolute;inset:0;background:radial-gradient(70% 55% at 50% 46%, rgba(57,255,140,.16) 0%, rgba(57,255,140,0) 70%)"></div>
+        </div>
+
+        <!-- HERO COPY -->
+        <div id="hero-copy" style="position:absolute;inset:0;z-index:6;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 clamp(18px,5vw,40px);pointer-events:none;opacity:min(calc((var(--p) - .52) * 9),1);transform:translateY(calc((1 - var(--p)) * 12px))">
+          <div id="hero-badge" style="font-family:'Press Start 2P','Galmuri11',monospace;font-size:9px;color:#9bf24a;letter-spacing:1px;margin-bottom:22px;animation:riseIn .5s ease both;display:none">2026 · INDIE APP &amp; GAME STUDIO · SEOUL</div>
+          <img id="hero-star" src="/assets/star.png" alt="Byeolter star" width="72" height="72" style="display:block;margin:0 auto 20px;filter:drop-shadow(0 0 14px rgba(255,210,63,.6))">
+          <h1 id="hero-title" style="font-family:'Press Start 2P','Galmuri11',monospace;font-size:clamp(30px,8vw,70px);line-height:1.16;min-height:1.16em;margin:0;color:#ffd23f;text-shadow:5px 5px 0 #ff5db1;letter-spacing:2px"><span id="title-text"></span><span id="title-cursor" style="animation:blink .5s steps(1) infinite;color:#7dffae;display:none">█</span></h1>
+          <div id="hero-sub" style="display:none;flex-direction:column;align-items:center;animation:riseIn .55s ease .08s both">
+            <p style="font-size:clamp(19px,2.6vw,26px);line-height:1.35;color:#cdd6ff;max-width:30ch;margin:22px auto 0">We make small magic<br><span style="color:#9bf24a;font-size:.82em;letter-spacing:.04em">APPS &amp; TINY WORLDS</span></p>
+            <button id="btn-open-game" style="margin-top:28px;font-family:'Press Start 2P','Galmuri11',monospace;font-size:12px;color:#0a0a1f;background:#9bf24a;padding:16px 26px;border:3px solid #000;box-shadow:5px 5px 0 #000;cursor:pointer;pointer-events:auto">
+              <span style="animation:blink 1s steps(1) infinite">▶</span> PRESS START
+            </button>
+            <a href="#work" style="display:block;margin-top:20px;font-family:'Press Start 2P','Galmuri11',monospace;font-size:8px;letter-spacing:1px;color:#6a73b8;text-decoration:none;pointer-events:auto">↓ OR SCROLL TO EXPLORE</a>
+          </div>
+        </div>
+
+        <!-- SCROLL HINT -->
+        <div style="position:absolute;left:0;right:0;bottom:28px;z-index:7;text-align:center;pointer-events:none;opacity:calc(1 - var(--p) * 4.5)">
+          <div style="font-family:'Press Start 2P','Galmuri11',monospace;font-size:9px;letter-spacing:2px;color:#cdd6ff">SCROLL TO DIVE IN</div>
+          <div style="margin-top:10px;font-size:14px;color:#4fe0d8;animation:bob 1.4s ease-in-out infinite">▼</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- NAV -->
+    <div style="position:sticky;top:0;z-index:40">
+      <nav style="position:relative;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:16px clamp(16px,4vw,40px);border-bottom:3px solid #000;background:#0d0d28;box-shadow:0 3px 0 #ffd23f">
+        <a href="#top" style="display:flex;align-items:center;gap:10px;text-decoration:none;color:#eaf0ff">
+          <img src="/assets/star.png" alt="Byeolter star" width="26" height="26" style="display:block">
+          <span style="font-family:'Press Start 2P','Galmuri11',monospace;font-size:13px;color:#ffd23f;letter-spacing:1px">BYEOLTER</span>
+        </a>
+        <div style="display:flex;align-items:center;gap:26px" data-nav-desktop="">
+          <a href="/apps/" style="font-family:'Press Start 2P','Galmuri11',monospace;font-size:9px;color:#4fe0d8;text-decoration:none">APPS</a>
+          <a href="/games/" style="font-family:'Press Start 2P','Galmuri11',monospace;font-size:9px;color:#ff5db1;text-decoration:none">GAMES</a>
+          <a href="#contact" style="font-family:'Press Start 2P','Galmuri11',monospace;font-size:9px;color:#9bf24a;text-decoration:none">CONTACT</a>
+        </div>
+        <button id="btn-menu" aria-label="Menu" style="display:none;background:#ff5db1;border:3px solid #000;width:42px;height:38px;cursor:pointer;box-shadow:3px 3px 0 #000;align-items:center;justify-content:center;flex-direction:column;gap:4px" data-nav-burger="">
+          <span style="width:18px;height:3px;background:#0a0a1f;display:block"></span>
+          <span style="width:18px;height:3px;background:#0a0a1f;display:block"></span>
+          <span style="width:18px;height:3px;background:#0a0a1f;display:block"></span>
+        </button>
+      </nav>
+      <div id="mobile-menu" style="display:none;flex-direction:column;background:#0d0d28;border-bottom:3px solid #000;box-shadow:0 10px 0 rgba(0,0,0,.35)">
+        <a href="/apps/" onclick="closeMenu()" style="font-family:'Press Start 2P','Galmuri11',monospace;font-size:10px;color:#4fe0d8;text-decoration:none;padding:16px 24px;border-bottom:2px solid #1d1d44">APPS</a>
+        <a href="/games/" onclick="closeMenu()" style="font-family:'Press Start 2P','Galmuri11',monospace;font-size:10px;color:#ff5db1;text-decoration:none;padding:16px 24px;border-bottom:2px solid #1d1d44">GAMES</a>
+        <a href="#contact" onclick="closeMenu()" style="font-family:'Press Start 2P','Galmuri11',monospace;font-size:10px;color:#9bf24a;text-decoration:none;padding:16px 24px">CONTACT</a>
+      </div>
+    </div>
+
+    <!-- MARQUEE -->
+    <div style="overflow:hidden;background:#ffd23f;border-top:3px solid #000;border-bottom:3px solid #000;padding:9px 0">
+      <div style="display:inline-flex;white-space:nowrap;animation:marquee 18s linear infinite;font-family:'Press Start 2P','Galmuri11',monospace;font-size:10px;color:#0a0a1f">
+        <span style="padding-right:28px">★ SMALL MAGIC, BIG WORLDS ★ APPS &amp; GAMES ★ MADE IN SEOUL ★ SMALL MAGIC, BIG WORLDS ★ APPS &amp; GAMES ★ MADE IN SEOUL&nbsp;</span>
+        <span style="padding-right:28px">★ SMALL MAGIC, BIG WORLDS ★ APPS &amp; GAMES ★ MADE IN SEOUL ★ SMALL MAGIC, BIG WORLDS ★ APPS &amp; GAMES ★ MADE IN SEOUL&nbsp;</span>
+      </div>
+    </div>
+
+    <!-- WHAT WE MAKE -->
+    <section id="work" style="padding:clamp(40px,7vw,80px) clamp(16px,4vw,40px)">
+      <div style="max-width:1040px;margin:0 auto">
+        <h2 style="font-family:'Press Start 2P','Galmuri11',monospace;font-size:clamp(18px,4vw,30px);text-align:center;color:#ffd23f;text-shadow:3px 3px 0 #ff5db1;margin:0 0 26px;letter-spacing:1px">WHAT WE MAKE</h2>
+
+        <div style="max-width:440px;margin:0 auto 42px;background:#0e1030;border:3px solid #000;box-shadow:0 0 0 4px #1d1d44, 8px 8px 0 rgba(0,0,0,.5)">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;background:#1d1d44;border-bottom:3px solid #000;padding:10px 13px">
+            <span style="font-family:'Press Start 2P','Galmuri11',monospace;font-size:9px;color:#ffd23f;letter-spacing:1px">SELECT YOUR WORLD</span>
+            <span style="font-family:'Press Start 2P','Galmuri11',monospace;font-size:9px;color:#9bf24a;animation:blink 1s steps(1) infinite">●</span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:8px;padding:12px">
+            <a href="/apps/" style="display:flex;align-items:center;justify-content:space-between;gap:14px;text-decoration:none;font-family:'Press Start 2P','Galmuri11',monospace;font-size:13px;line-height:1;color:#4fe0d8;padding:15px 14px;border:2px solid transparent;transition:background .1s,color .1s,border-color .1s" onmouseover="this.style.background='#4fe0d8';this.style.color='#0a0a1f';this.style.borderColor='#000'" onmouseout="this.style.background='';this.style.color='#4fe0d8';this.style.borderColor='transparent'">
+              <span style="display:flex;align-items:center;gap:13px"><span style="opacity:.45">▶</span> APPS</span>
+              <span style="font-size:11px;opacity:.6">( 1 )</span>
+            </a>
+            <a href="#games" style="display:flex;align-items:center;justify-content:space-between;gap:14px;text-decoration:none;font-family:'Press Start 2P','Galmuri11',monospace;font-size:13px;line-height:1;color:#ff5db1;padding:15px 14px;border:2px solid transparent;transition:background .1s,color .1s,border-color .1s" onmouseover="this.style.background='#ff5db1';this.style.color='#0a0a1f';this.style.borderColor='#000'" onmouseout="this.style.background='';this.style.color='#ff5db1';this.style.borderColor='transparent'">
+              <span style="display:flex;align-items:center;gap:13px"><span style="opacity:.45">▶</span> GAMES</span>
+              <span style="font-size:11px;opacity:.6">( 1 )</span>
+            </a>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:26px">
+
+          <!-- APPS CARD -->
+          <article id="apps" style="scroll-margin-top:90px;background:#0e1030;border:3px solid #000;box-shadow:0 0 0 4px #4fe0d8, 8px 8px 0 rgba(0,0,0,.5)">
+            <div style="display:flex;align-items:center;justify-content:space-between;background:#4fe0d8;border-bottom:3px solid #000;padding:8px 11px">
+              <span style="font-family:'Press Start 2P','Galmuri11',monospace;font-size:9px;color:#0a0a1f">LEVEL 01 — APPS</span>
+              <img src="/assets/star.png" width="16" height="16" alt="">
+            </div>
+            <div style="padding:18px">
+              <div style="height:160px;border:3px solid #000;margin-bottom:18px;background:radial-gradient(90% 90% at 50% 45%,#181d44,#0c0e26);display:flex;align-items:center;justify-content:center;overflow:hidden;padding:10px">
+                <img src="/assets/widgetbuddy.png" alt="Widget Buddy" style="display:block;max-width:100%;max-height:100%;object-fit:contain;image-rendering:pixelated;filter:drop-shadow(0 6px 12px rgba(0,0,0,.5))">
+              </div>
+              <h3 style="font-family:'Press Start 2P','Galmuri11',monospace;font-size:12px;color:#4fe0d8;margin:0 0 6px;line-height:1.5">WIDGET BUDDY</h3>
+              <div style="font-family:'Galmuri11','VT323',monospace;font-size:18px;color:#9bf24a;margin:0 0 12px">위젯버디 · 손안의 작은 친구</div>
+              <p style="font-size:20px;line-height:1.3;color:#cdd6ff;margin:0 0 16px">A pixel pet that lives on your home screen — feed it, pet it, and watch your little buddy grow.</p>
+              <div style="display:flex;flex-wrap:wrap;gap:8px;font-family:'Press Start 2P','Galmuri11',monospace;font-size:8px">
+                <span style="color:#0a0a1f;background:#9bf24a;padding:6px 9px;border:2px solid #000">SIMULATION</span>
+                <span style="color:#0a0a1f;background:#9bf24a;padding:6px 9px;border:2px solid #000">PIXEL ART</span>
+                <span style="color:#0a0a1f;background:#9bf24a;padding:6px 9px;border:2px solid #000">ANDROID</span>
+              </div>
+              <a href="/apps/" style="display:inline-flex;align-items:center;gap:8px;margin-top:18px;font-family:'Press Start 2P','Galmuri11',monospace;font-size:8px;color:#0a0a1f;background:#4fe0d8;text-decoration:none;padding:11px 13px;border:2px solid #000;box-shadow:3px 3px 0 #000">VIEW APP ▶</a>
+            </div>
+          </article>
+
+          <!-- GAMES CARD -->
+          <article id="games" style="scroll-margin-top:90px;background:#0e1030;border:3px solid #000;box-shadow:0 0 0 4px #ff5db1, 8px 8px 0 rgba(0,0,0,.5)">
+            <div style="display:flex;align-items:center;justify-content:space-between;background:#ff5db1;border-bottom:3px solid #000;padding:8px 11px">
+              <span style="font-family:'Press Start 2P','Galmuri11',monospace;font-size:9px;color:#0a0a1f">LEVEL 02 — GAMES</span>
+              <img src="/assets/star.png" width="16" height="16" alt="">
+            </div>
+            <div style="padding:18px">
+              <div style="position:relative;height:160px;border:3px solid #000;margin-bottom:18px;background:#0b0b1c;overflow:hidden">
+                <video src="/assets/Make Cinema Food.mp4" autoplay loop muted playsinline preload="metadata" style="display:block;width:100%;height:100%;object-fit:cover;image-rendering:pixelated"></video>
+                <span style="position:absolute;top:8px;left:8px;font-family:'Press Start 2P','Galmuri11',monospace;font-size:7px;color:#0a0a1f;background:#ffd23f;padding:5px 7px;border:2px solid #000">IN DEV</span>
+              </div>
+              <h3 style="font-family:'Press Start 2P','Galmuri11',monospace;font-size:12px;color:#ff5db1;margin:0 0 6px;line-height:1.5">MAKE CINEMA FOOD</h3>
+              <div style="font-family:'Galmuri11','VT323',monospace;font-size:18px;color:#9bf24a;margin:0 0 12px">음식으로 만드는 작은 영화</div>
+              <p style="font-size:20px;line-height:1.3;color:#cdd6ff;margin:0 0 16px">A cozy pixel kitchen where you cook tiny cinematic dishes and plate little moments of food-film magic.</p>
+              <div style="display:flex;flex-wrap:wrap;gap:8px;font-family:'Press Start 2P','Galmuri11',monospace;font-size:8px">
+                <span style="color:#0a0a1f;background:#ffd23f;padding:6px 9px;border:2px solid #000">CASUAL</span>
+                <span style="color:#0a0a1f;background:#ffd23f;padding:6px 9px;border:2px solid #000">COOKING</span>
+                <span style="color:#0a0a1f;background:#ffd23f;padding:6px 9px;border:2px solid #000">PIXEL ART</span>
+              </div>
+              <a href="#games" style="display:inline-flex;align-items:center;gap:8px;margin-top:18px;font-family:'Press Start 2P','Galmuri11',monospace;font-size:8px;color:#0a0a1f;background:#ff5db1;text-decoration:none;padding:11px 13px;border:2px solid #000;box-shadow:3px 3px 0 #000">VIEW GAME ▶</a>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" style="padding:clamp(30px,6vw,70px) clamp(16px,4vw,40px) clamp(40px,7vw,80px)">
+      <div style="max-width:760px;margin:0 auto;text-align:center;background:#0e1030;border:3px solid #000;box-shadow:0 0 0 4px #ffd23f, 10px 10px 0 rgba(0,0,0,.55);padding:clamp(30px,5vw,56px) clamp(18px,4vw,40px)">
+        <div style="font-family:'Press Start 2P','Galmuri11',monospace;font-size:11px;color:#9bf24a;margin-bottom:18px"><span style="animation:blink 1s steps(1) infinite">●</span> PLAYER 2 JOINED</div>
+        <h2 style="font-family:'Press Start 2P','Galmuri11',monospace;font-size:clamp(15px,3.4vw,24px);line-height:1.5;color:#ffd23f;text-shadow:3px 3px 0 #ff5db1;margin:0">LET'S MAKE<br>SOMETHING THAT SHINES</h2>
+        <p style="font-size:21px;line-height:1.35;color:#cdd6ff;max-width:300px;margin:22px auto 28px">함께 만들 작은 마법이 있다면 언제든 편하게 연락 주세요.</p>
+        <a href="mailto:contact@byeolter.com" style="display:inline-flex;align-items:center;gap:13px;font-family:'Press Start 2P','Galmuri11',monospace;font-size:clamp(11px,2.4vw,15px);color:#0a0a1f;background:#4fe0d8;text-decoration:none;padding:18px 26px;border:3px solid #000;box-shadow:6px 6px 0 #000">
+          <img src="/assets/star.png" width="22" height="22" alt="">contact@byeolter.com
+        </a>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;padding:18px clamp(16px,4vw,40px);border-top:3px solid #000;background:#0d0d28;font-family:'Press Start 2P','Galmuri11',monospace;font-size:8px;color:#6a73b8">
+      <span style="color:#ffd23f">© 2026 BYEOLTER</span>
+      <div style="display:flex;flex-wrap:wrap;align-items:center;gap:24px">
+        <a href="/privacy/" style="color:#4fe0d8;text-decoration:none">PRIVACY</a>
+        <a href="mailto:contact@byeolter.com" style="color:#ff5db1;text-decoration:none">CONTACT</a>
+        <a href="https://play.google.com/store" style="color:#9bf24a;text-decoration:none">GOOGLE PLAY</a>
+      </div>
+    </footer>
+
+  </div>
+</div>
+
+<script>
+// ── Sky stars ──────────────────────────────────────────────
+(function() {
+  const sky = document.getElementById('sky');
+  const cols = ['#ffffff','#4fe0d8','#ff5db1','#ffd23f','#9bf24a'];
+  for (let i = 0; i < 70; i++) {
+    const d = document.createElement('div');
+    const size = Math.random() < 0.7 ? 2 : 3;
+    const dur = (1.4 + Math.random() * 2).toFixed(2);
+    const delay = (Math.random() * 3).toFixed(2);
+    d.style.cssText = `position:absolute;left:${(Math.random()*100).toFixed(2)}%;top:${(Math.random()*100).toFixed(2)}%;width:${size}px;height:${size}px;background:${cols[(Math.random()*cols.length)|0]};image-rendering:pixelated;animation:twpix ${dur}s steps(2) ${delay}s infinite`;
+    sky.appendChild(d);
+  }
+})();
+
+// ── Scroll parallax (--p) ──────────────────────────────────
+const track = document.getElementById('track');
+const stage = document.getElementById('stage');
+let booted = false;
+
+function setP() {
+  if (!track || !stage) return;
+  const rect = track.getBoundingClientRect();
+  const vh = window.innerHeight;
+  const total = rect.height - vh;
+  let p = total > 0 ? (-rect.top) / total : 0;
+  p = Math.max(0, Math.min(1, p));
+  stage.style.setProperty('--p', p.toFixed(4));
+  if (!booted && p >= 0.64) { booted = true; runBoot(); }
+}
+
+let raf;
+function loop() { setP(); raf = requestAnimationFrame(loop); }
+window.addEventListener('scroll', setP, { passive: true });
+window.addEventListener('resize', setP);
+loop();
+
+// ── Boot sequence ──────────────────────────────────────────
+const titleText = document.getElementById('title-text');
+const titleCursor = document.getElementById('title-cursor');
+const heroBadge = document.getElementById('hero-badge');
+const heroSub = document.getElementById('hero-sub');
+const heroStar = document.getElementById('hero-star');
+
+function runBoot() {
+  heroStar.style.animation = 'hop .7s steps(6) infinite alternate';
+  titleCursor.style.display = 'inline';
+  setTimeout(() => {
+    const full = 'BYEOLTER';
+    let i = 0;
+    const iv = setInterval(() => {
+      i++;
+      titleText.textContent = full.slice(0, i);
+      if (i >= full.length) {
+        clearInterval(iv);
+        titleCursor.style.display = 'none';
+        setTimeout(() => {
+          heroBadge.style.display = 'block';
+          heroSub.style.display = 'flex';
+        }, 420);
+      }
+    }, 140);
+  }, 950);
+}
+
+// Jump to hash if present on load
+if (location.hash && location.hash.length > 1) {
+  booted = true;
+  heroStar.style.animation = 'hop .7s steps(6) infinite alternate';
+  titleText.textContent = 'BYEOLTER';
+  heroBadge.style.display = 'block';
+  heroSub.style.display = 'flex';
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    const el = document.getElementById(location.hash.slice(1));
+    if (el) window.scrollTo(0, el.getBoundingClientRect().top + window.scrollY);
+  }));
+}
+
+// ── Nav menu ───────────────────────────────────────────────
+document.getElementById('btn-menu').addEventListener('click', () => {
+  const m = document.getElementById('mobile-menu');
+  m.style.display = m.style.display === 'flex' ? 'none' : 'flex';
+});
+function closeMenu() {
+  document.getElementById('mobile-menu').style.display = 'none';
+}
+
+// ── Game ───────────────────────────────────────────────────
+const gameOverlay = document.getElementById('game-overlay');
+document.getElementById('btn-open-game').addEventListener('click', openGame);
+document.getElementById('btn-close-game').addEventListener('click', closeGame);
+
+let gameRunning = false, gaf, fallback, gctx, groundY, k, psize, px, gstars = [],
+    gstarsW = 0, gmode = 'ready', score = 0, speed = 340, player = null,
+    obstacles = [], spawnIn = 0.7, grav = 2600, jumpV = -1000,
+    hi = +(localStorage.getItem('byeolter_runner_hi') || 0),
+    surf = 0, glast = 0, lastTickAt = 0;
+
+const starImg = new Image();
+starImg.src = '/assets/star.png';
+
+function openGame() {
+  gameOverlay.style.display = 'flex';
+  startGame();
+}
+
+function closeGame() {
+  gameOverlay.style.display = 'none';
+  stopGame();
+}
+
+function sizeCanvas() {
+  const cv = document.getElementById('game-canvas');
+  const r = cv.getBoundingClientRect();
+  cv.width = Math.max(320, Math.round(r.width));
+  cv.height = Math.max(220, Math.round(r.height));
+  const H = cv.height;
+  groundY = H - Math.max(28, H * 0.10);
+  k = H / 480;
+  psize = Math.min(58, Math.max(34, H * 0.12));
+  px = Math.max(48, cv.width * 0.12);
+  if (gstarsW !== cv.width) { makeGStars(); gstarsW = cv.width; }
+  if (player && player.onground) player.y = groundY;
+}
+
+function makeGStars() {
+  const cv = document.getElementById('game-canvas'); if (!cv) return;
+  const cols = ['#ffffff','#aeb9ff','#ffd23f','#4fe0d8'];
+  gstars = [];
+  for (let i = 0; i < 70; i++) {
+    gstars.push({ x: Math.random()*cv.width, y: Math.random()*groundY, s: Math.random()<0.7?1:2, layer: Math.random()<0.5?0.3:0.65, c: cols[(Math.random()*cols.length)|0] });
+  }
+}
+
+function resetRun(ready) {
+  gmode = ready ? 'ready' : 'run';
+  score = 0; speed = 340 * k;
+  player = { y: groundY, vy: 0, onground: true };
+  obstacles = []; spawnIn = 0.7;
+  grav = 2600 * k; jumpV = -1000 * k;
+  hi = +(localStorage.getItem('byeolter_runner_hi') || 0);
+  surf = 0;
+}
+
+function gameInput() {
+  if (gmode === 'ready' || gmode === 'over') { resetRun(false); gmode = 'run'; return; }
+  if (gmode === 'run' && player.onground) { player.vy = jumpV; player.onground = false; }
+}
+
+function gstep(dt) {
+  const cv = document.getElementById('game-canvas'); if (!cv) return;
+  const base = gmode === 'run' ? speed : 80 * k;
+  for (const st of gstars) { st.x -= base * st.layer * dt; if (st.x < -4) { st.x = cv.width + 4; st.y = Math.random() * groundY; } }
+  surf = (surf - base * dt) % 24;
+  if (gmode !== 'run') return;
+  speed += dt * 7 * k; score += speed * dt * 0.02;
+  player.vy += grav * dt; player.y += player.vy * dt;
+  if (player.y >= groundY) { player.y = groundY; player.vy = 0; player.onground = true; }
+  spawnIn -= dt;
+  if (spawnIn <= 0) {
+    const h = psize * (0.7 + Math.random() * 1.05), w = psize * (0.5 + Math.random() * 0.6);
+    obstacles.push({ x: cv.width + w, w, h });
+    const gap = Math.max(0.62, 1.5 - speed / (1400 * k));
+    spawnIn = gap * (0.8 + Math.random() * 0.6);
+  }
+  for (const o of obstacles) o.x -= speed * dt;
+  obstacles = obstacles.filter(o => o.x + o.w > -4);
+  const hbx = px + psize*0.18, hby = player.y - psize + psize*0.12, hbw = psize*0.64, hbh = psize*0.78;
+  for (const o of obstacles) {
+    const ox = o.x+o.w*0.12, oy = groundY-o.h+o.h*0.08, ow = o.w*0.76, oh = o.h*0.84;
+    if (hbx < ox+ow && hbx+hbw > ox && hby < oy+oh && hby+hbh > oy) {
+      gmode = 'over';
+      if (score > hi) { hi = score|0; try { localStorage.setItem('byeolter_runner_hi', hi); } catch(e){} }
+    }
+  }
+}
+
+function gdraw() {
+  const cv = document.getElementById('game-canvas'); if (!cv || !gctx) return;
+  const ctx = gctx, W = cv.width, H = cv.height;
+  const g = ctx.createLinearGradient(0,0,0,H);
+  g.addColorStop(0,'#0a0a22'); g.addColorStop(0.6,'#0c0e28'); g.addColorStop(1,'#08081a');
+  ctx.fillStyle = g; ctx.fillRect(0,0,W,H);
+  const rg = ctx.createRadialGradient(W*.75,H*.25,0,W*.75,H*.25,H*.7);
+  rg.addColorStop(0,'rgba(90,45,130,.25)'); rg.addColorStop(1,'rgba(90,45,130,0)');
+  ctx.fillStyle = rg; ctx.fillRect(0,0,W,H);
+  for (const st of gstars) { ctx.globalAlpha = st.layer < 0.5 ? 0.6 : 1; ctx.fillStyle = st.c; ctx.fillRect(st.x|0,st.y|0,st.s,st.s); }
+  ctx.globalAlpha = 1;
+  ctx.strokeStyle = '#2a2f55'; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(0,groundY+2); ctx.lineTo(W,groundY+2); ctx.stroke();
+  ctx.fillStyle = '#4fe0d8';
+  for (let x = surf; x < W; x += 24) ctx.fillRect(x,groundY+8,8,2);
+  for (const o of obstacles) drawRock(ctx,o.x,groundY-o.h,o.w,o.h);
+  drawPlayer(ctx);
+  ctx.fillStyle = '#9bf24a'; ctx.font = Math.max(12,14*k)+"px 'Press Start 2P',monospace"; ctx.textBaseline='top'; ctx.textAlign='left';
+  ctx.fillText('SCORE '+String(score|0).padStart(5,'0'),14,12);
+  ctx.fillStyle = '#6a73b8'; ctx.textAlign='right';
+  ctx.fillText('HI '+String(hi|0).padStart(5,'0'),W-14,12);
+  ctx.textAlign='left';
+  if (gmode === 'ready' || gmode === 'over') {
+    ctx.fillStyle = 'rgba(4,4,12,.55)'; ctx.fillRect(0,0,W,H);
+    ctx.textAlign = 'center';
+    ctx.fillStyle = '#ffd23f'; ctx.font = Math.max(16,24*k)+"px 'Press Start 2P',monospace";
+    ctx.fillText(gmode==='over'?'GAME OVER':'STAR RUNNER',W/2,H*0.32);
+    ctx.fillStyle = '#cdd6ff'; ctx.font = Math.max(11,13*k)+"px 'Press Start 2P',monospace";
+    ctx.fillText(gmode==='over'?('SCORE '+(score|0)):'JUMP THE ASTEROIDS',W/2,H*0.32+Math.max(30,42*k));
+    ctx.fillStyle = '#4fe0d8';
+    ctx.fillText('SPACE / TAP TO '+(gmode==='over'?'RETRY':'START'),W/2,H*0.32+Math.max(56,78*k));
+    ctx.textAlign='left';
+  }
+}
+
+function drawPlayer(ctx) {
+  const s = psize, y = player.y - s;
+  ctx.save(); ctx.shadowColor='rgba(255,210,63,.7)'; ctx.shadowBlur=14;
+  if (starImg.complete && starImg.naturalWidth) { ctx.imageSmoothingEnabled=false; ctx.drawImage(starImg,px|0,y|0,s,s); }
+  else { ctx.fillStyle='#ffd23f'; ctx.fillRect(px,y,s,s); }
+  ctx.restore();
+}
+
+function drawRock(ctx,x,y,w,h) {
+  ctx.save();
+  ctx.fillStyle='#8b90b8'; ctx.fillRect(x+w*0.08,y,w*0.84,h); ctx.fillRect(x,y+h*0.18,w,h*0.7);
+  ctx.fillStyle='#5b6090'; ctx.fillRect(x+w*0.2,y+h*0.25,w*0.18,h*0.18); ctx.fillRect(x+w*0.55,y+h*0.5,w*0.16,h*0.16);
+  ctx.fillStyle='#ff5db1'; ctx.fillRect(x,y+h-3,w,3);
+  ctx.restore();
+}
+
+function startGame() {
+  if (gameRunning) return;
+  gameRunning = true;
+  const cv = document.getElementById('game-canvas');
+  gctx = cv.getContext('2d');
+  sizeCanvas(); resetRun(true); gdraw();
+
+  const onResize = () => sizeCanvas();
+  const onKey = (e) => {
+    if (e.code === 'Escape') { closeGame(); return; }
+    if (e.code === 'Space' || e.code === 'ArrowUp' || e.code === 'Enter') { e.preventDefault(); gameInput(); }
+  };
+  const onTap = (e) => { e.preventDefault(); gameInput(); };
+  window.addEventListener('resize', onResize);
+  window.addEventListener('keydown', onKey);
+  cv.addEventListener('pointerdown', onTap);
+
+  glast = performance.now(); lastTickAt = glast;
+  const tick = (now) => {
+    if (!gameRunning) return;
+    const t = now || performance.now();
+    sizeCanvas();
+    let dt = (t - glast) / 1000; glast = t; if (dt > 0.05) dt = 0.05;
+    gstep(dt); gdraw(); lastTickAt = t;
+    gaf = requestAnimationFrame(tick);
+  };
+  gaf = requestAnimationFrame(tick);
+  fallback = setInterval(() => {
+    if (!gameRunning) return;
+    if (performance.now() - lastTickAt > 120) tick(performance.now());
+  }, 33);
+
+  // store cleanup refs
+  startGame._cleanup = () => {
+    window.removeEventListener('resize', onResize);
+    window.removeEventListener('keydown', onKey);
+    cv.removeEventListener('pointerdown', onTap);
+  };
+}
+
+function stopGame() {
+  gameRunning = false;
+  if (gaf) cancelAnimationFrame(gaf);
+  if (fallback) clearInterval(fallback);
+  if (startGame._cleanup) { startGame._cleanup(); startGame._cleanup = null; }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,197 @@
+---
+// Byeolter Games Page
+---
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Byeolter Games — small worlds to get lost in.">
+<title>Games | Byeolter</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/galmuri/dist/galmuri.css" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  img{image-rendering:pixelated}
+  ::selection{background:#ff5db1;color:#0a0a1f}
+  @keyframes twpix{0%,100%{opacity:.2}50%{opacity:1}}
+  @keyframes blink{0%,49%{opacity:1}50%,100%{opacity:0}}
+  @keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+  @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
+  @keyframes riseIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes crtflick{0%,100%{opacity:.10}48%{opacity:.18}50%{opacity:.05}52%{opacity:.20}}
+  @keyframes scanroll{0%{background-position:0 0}100%{background-position:0 8px}}
+  .game-card{transition:transform .12s steps(2), box-shadow .12s steps(2)}
+  .game-card:hover{transform:translateY(-6px);box-shadow:0 0 0 4px #ff5db1, 0 0 26px rgba(255,93,177,.55), 12px 12px 0 rgba(0,0,0,.55) !important}
+  .game-card .crtlayer{opacity:0;transition:opacity .12s}
+  .game-card:hover .crtlayer{opacity:1;animation:crtflick .5s steps(2) infinite, scanroll .6s linear infinite}
+  @media (max-width:760px){
+    [data-nav-desktop]{display:none !important}
+    [data-nav-burger]{display:flex !important}
+    [data-card-grid]{grid-template-columns:1fr !important}
+  }
+</style>
+</head>
+<body>
+<div style="position:relative;min-height:100vh;background:radial-gradient(120% 80% at 50% -10%, #2a0f33 0%, rgba(42,15,51,0) 55%), #0a0a1f;color:#eaf0ff;font-family:'VT323','Galmuri11',monospace">
+
+  <div id="sky" style="position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:1"></div>
+
+  <div style="position:relative;z-index:5">
+
+    <!-- NAV -->
+    <div style="position:sticky;top:0;z-index:40">
+      <nav style="position:relative;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:16px clamp(16px,4vw,40px);border-bottom:3px solid #000;background:#0d0d28;box-shadow:0 3px 0 #ff5db1">
+        <a href="/" style="display:flex;align-items:center;gap:10px;text-decoration:none;color:#eaf0ff">
+          <img src="/assets/star.png" alt="Byeolter star" width="26" height="26" style="display:block;image-rendering:pixelated">
+          <span style="font-family:'Press Start 2P','Galmuri11',monospace;font-size:13px;color:#ffd23f;letter-spacing:1px">BYEOLTER</span>
+        </a>
+        <div style="display:flex;align-items:center;gap:14px" data-nav-desktop="">
+          <a href="/apps/" style="font-family:'Press Start 2P','Galmuri11',monospace;font-size:9px;color:#4fe0d8;text-decoration:none;padding:9px 11px">APPS</a>
+          <span style="font-family:'Press Start 2P','Galmuri11',monospace;font-size:9px;color:#0a0a1f;background:#ff5db1;padding:9px 11px;border:2px solid #000;box-shadow:3px 3px 0 #000">GAMES</span>
+          <a href="/#contact" style="font-family:'Press Start 2P','Galmuri11',monospace;font-size:9px;color:#9bf24a;text-decoration:none;padding:9px 11px">CONTACT</a>
+        </div>
+        <button id="btn-menu" aria-label="Menu" style="display:none;background:#ff5db1;border:3px solid #000;width:42px;height:38px;cursor:pointer;box-shadow:3px 3px 0 #000;align-items:center;justify-content:center;flex-direction:column;gap:4px" data-nav-burger="">
+          <span style="width:18px;height:3px;background:#0a0a1f;display:block"></span>
+          <span style="width:18px;height:3px;background:#0a0a1f;display:block"></span>
+          <span style="width:18px;height:3px;background:#0a0a1f;display:block"></span>
+        </button>
+      </nav>
+      <div id="mobile-menu" style="display:none;flex-direction:column;background:#0d0d28;border-bottom:3px solid #000">
+        <a href="/apps/" onclick="document.getElementById('mobile-menu').style.display='none'" style="font-family:'Press Start 2P','Galmuri11',monospace;font-size:10px;color:#4fe0d8;text-decoration:none;padding:16px 24px;border-bottom:2px solid #1d1d44">APPS</a>
+        <span style="font-family:'Press Start 2P','Galmuri11',monospace;font-size:10px;color:#0a0a1f;background:#ff5db1;padding:16px 24px;border-bottom:2px solid #1d1d44">GAMES</span>
+        <a href="/#contact" onclick="document.getElementById('mobile-menu').style.display='none'" style="font-family:'Press Start 2P','Galmuri11',monospace;font-size:10px;color:#9bf24a;text-decoration:none;padding:16px 24px">CONTACT</a>
+      </div>
+    </div>
+
+    <!-- MARQUEE -->
+    <div style="overflow:hidden;background:#ff5db1;border-top:3px solid #000;border-bottom:3px solid #000;padding:9px 0">
+      <div style="display:inline-flex;white-space:nowrap;animation:marquee 20s linear infinite;font-family:'Press Start 2P','Galmuri11',monospace;font-size:10px;color:#0a0a1f">
+        <span style="padding-right:28px">★ GAME LIBRARY ★ SMALL WORLDS TO GET LOST IN ★ MADE IN SEOUL ★ GAME LIBRARY ★ SMALL WORLDS TO GET LOST IN ★ MADE IN SEOUL&nbsp;</span>
+        <span style="padding-right:28px">★ GAME LIBRARY ★ SMALL WORLDS TO GET LOST IN ★ MADE IN SEOUL ★ GAME LIBRARY ★ SMALL WORLDS TO GET LOST IN ★ MADE IN SEOUL&nbsp;</span>
+      </div>
+    </div>
+
+    <!-- HERO -->
+    <header style="padding:clamp(46px,8vw,96px) clamp(18px,5vw,40px) clamp(30px,5vw,56px);text-align:center">
+      <div style="font-family:'Press Start 2P','Galmuri11',monospace;font-size:11px;color:#ff5db1;letter-spacing:2px;margin-bottom:22px;animation:riseIn .5s ease both">LEVEL 02</div>
+      <h1 style="font-family:'Press Start 2P','Galmuri11',monospace;font-size:clamp(44px,12vw,108px);line-height:1.1;margin:0;color:#ffd23f;text-shadow:6px 6px 0 #ff5db1;letter-spacing:3px">GAMES</h1>
+      <p style="font-family:'Press Start 2P','Galmuri11',monospace;font-size:clamp(10px,2vw,13px);line-height:1.6;color:#9bf24a;margin:26px auto 0;letter-spacing:1px">SMALL WORLDS TO GET LOST IN.</p>
+      <p style="font-size:clamp(20px,2.6vw,26px);line-height:1.4;color:#cdd6ff;max-width:48ch;margin:20px auto 0">Hand-crafted games full of tiny adventures, cozy moments, and playful discoveries.</p>
+      <div style="margin-top:30px;color:#ff5db1;font-size:16px;animation:bob 1.6s ease-in-out infinite">▼</div>
+    </header>
+
+    <!-- LIBRARY -->
+    <section style="padding:0 clamp(16px,4vw,40px) clamp(56px,8vw,100px)">
+      <div style="max-width:1080px;margin:0 auto">
+
+        <div style="display:flex;align-items:center;gap:16px;margin-bottom:40px">
+          <span style="font-family:'Press Start 2P','Galmuri11',monospace;font-size:clamp(12px,2.4vw,16px);color:#eaf0ff;letter-spacing:1px;white-space:nowrap">GAME LIBRARY</span>
+          <span style="flex:1;height:3px;background:repeating-linear-gradient(90deg,#3a1a40 0 8px,transparent 8px 14px)"></span>
+          <span style="font-family:'Press Start 2P','Galmuri11',monospace;font-size:10px;color:#b86a9e;white-space:nowrap">00 RELEASED · 01 IN DEV</span>
+        </div>
+
+        <div style="display:flex;flex-direction:column;align-items:center;gap:clamp(40px,6vw,72px)">
+
+          <!-- MAKE CINEMA FOOD -->
+          <article class="game-card" style="width:100%;max-width:960px;background:#0e1030;border:3px solid #000;box-shadow:0 0 0 4px #3a1a40, 10px 10px 0 rgba(0,0,0,.5);will-change:transform">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;background:#ff5db1;border-bottom:3px solid #000;padding:10px 14px">
+              <span style="font-family:'Press Start 2P','Galmuri11',monospace;font-size:9px;color:#0a0a1f;letter-spacing:1px">SLOT 01</span>
+              <span style="display:flex;align-items:center;gap:8px;font-family:'Press Start 2P','Galmuri11',monospace;font-size:9px;color:#0a0a1f"><span style="width:7px;height:7px;background:#0a0a1f;display:block;animation:blink 1.3s steps(1) infinite"></span>IN DEVELOPMENT</span>
+            </div>
+            <div data-card-grid="" style="display:grid;grid-template-columns:1.15fr .85fr;align-items:stretch">
+
+              <!-- KEY ART -->
+              <div style="position:relative;border-right:3px solid #000;min-height:clamp(260px,34vw,400px);overflow:hidden;background:#0b0b1c">
+                <video src="/assets/Make Cinema Food.mp4" autoplay loop muted playsinline preload="metadata" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;image-rendering:pixelated;display:block"></video>
+                <div style="position:absolute;left:0;right:0;bottom:0;padding:18px 18px 16px;background:linear-gradient(0deg,rgba(8,8,24,.92) 0%,rgba(8,8,24,0) 100%)">
+                  <div style="font-family:'Press Start 2P','Galmuri11',monospace;font-size:clamp(16px,3.2vw,26px);line-height:1.2;color:#ffd23f;text-shadow:3px 3px 0 #ff5db1;letter-spacing:1px">MAKE CINEMA FOOD</div>
+                  <div style="font-family:'Galmuri11','VT323',monospace;font-size:18px;color:#9bf24a;letter-spacing:.02em;margin-top:8px">음식으로 만드는 작은 영화</div>
+                </div>
+                <div class="crtlayer" aria-hidden="true" style="position:absolute;inset:0;pointer-events:none;mix-blend-mode:screen;background:repeating-linear-gradient(0deg,rgba(255,255,255,.18) 0 1px,rgba(255,255,255,0) 1px 4px)"></div>
+              </div>
+
+              <!-- DETAILS -->
+              <div style="padding:clamp(20px,3vw,30px);display:flex;flex-direction:column">
+                <p style="font-size:clamp(19px,2.2vw,23px);line-height:1.4;color:#cdd6ff;margin:0">A cozy pixel kitchen where you cook tiny cinematic dishes, plate them just so, and serve up little moments of food-film magic.</p>
+                <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:22px">
+                  <span style="font-family:'Press Start 2P','Galmuri11',monospace;font-size:8px;color:#0a0a1f;background:#ffd23f;padding:7px 9px;border:2px solid #000">CASUAL</span>
+                  <span style="font-family:'Press Start 2P','Galmuri11',monospace;font-size:8px;color:#0a0a1f;background:#ffd23f;padding:7px 9px;border:2px solid #000">COOKING</span>
+                  <span style="font-family:'Press Start 2P','Galmuri11',monospace;font-size:8px;color:#0a0a1f;background:#ffd23f;padding:7px 9px;border:2px solid #000">PIXEL ART</span>
+                </div>
+                <div style="display:flex;align-items:center;gap:10px;margin-top:22px;font-family:'Press Start 2P','Galmuri11',monospace;font-size:8px;color:#8089c0;letter-spacing:1px">
+                  <span style="color:#6a73b8">PLATFORMS</span>
+                  <span style="color:#ff5db1">STEAM · WEB</span>
+                </div>
+                <!-- no PLAY button: released = false -->
+                <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:auto;padding-top:26px">
+                  <span style="display:inline-flex;align-items:center;gap:9px;font-family:'Press Start 2P','Galmuri11',monospace;font-size:9px;color:#ff5db1;border:2px solid #3a1a40;padding:12px 16px;letter-spacing:1px"><span style="width:7px;height:7px;background:#ff5db1;display:block;animation:blink 1.3s steps(1) infinite"></span>IN DEVELOPMENT</span>
+                </div>
+              </div>
+
+            </div>
+          </article>
+
+          <!-- COMING SOON -->
+          <div style="width:100%;max-width:960px;border:3px dashed #3a1a40;background:rgba(14,16,48,.4);padding:clamp(30px,5vw,48px) clamp(20px,4vw,40px);text-align:center;display:flex;flex-direction:column;align-items:center">
+            <div style="font-family:'Press Start 2P','Galmuri11',monospace;font-size:clamp(26px,6vw,44px);color:#3a1a40;line-height:1">?</div>
+            <div style="font-family:'Press Start 2P','Galmuri11',monospace;font-size:clamp(11px,2.4vw,14px);color:#b86a9e;letter-spacing:1px;margin-top:20px">NEXT WORLD IN PRODUCTION</div>
+            <p style="font-size:clamp(18px,2.2vw,22px);line-height:1.4;color:#8089c0;max-width:38ch;margin:14px auto 0">More small worlds are being hand-crafted in the studio. New games will appear here as they release.</p>
+            <span style="display:inline-flex;align-items:center;gap:9px;margin-top:26px;font-family:'Press Start 2P','Galmuri11',monospace;font-size:9px;color:#ff5db1;border:2px solid #3a1a40;padding:11px 14px;letter-spacing:1px"><span style="width:7px;height:7px;background:#ff5db1;display:block;animation:blink 1.4s steps(1) infinite"></span>COMING SOON</span>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;padding:18px clamp(16px,4vw,40px);border-top:3px solid #000;background:#0d0d28;font-family:'Press Start 2P','Galmuri11',monospace;font-size:8px;color:#6a73b8">
+      <span style="color:#ffd23f">© 2026 BYEOLTER</span>
+      <div style="display:flex;flex-wrap:wrap;align-items:center;gap:24px">
+        <a href="/privacy/" style="color:#4fe0d8;text-decoration:none">PRIVACY</a>
+        <a href="mailto:contact@byeolter.com" style="color:#ff5db1;text-decoration:none">CONTACT</a>
+        <a href="#" style="color:#9bf24a;text-decoration:none">STEAM</a>
+        <a href="https://play.google.com/store/apps/details?id=com.starterkim.widgetbuddy&hl=ko" target="_blank" rel="noopener" style="color:#aeb9ff;text-decoration:none">GOOGLE PLAY</a>
+      </div>
+    </footer>
+
+  </div>
+</div>
+
+<script>
+// Sky stars
+(function() {
+  const sky = document.getElementById('sky');
+  const cols = ['#ffffff','#4fe0d8','#ff5db1','#ffd23f','#9bf24a'];
+  for (let i = 0; i < 70; i++) {
+    const d = document.createElement('div');
+    const size = Math.random() < 0.7 ? 2 : 3;
+    const dur = (1.4 + Math.random() * 2).toFixed(2);
+    const delay = (Math.random() * 3).toFixed(2);
+    d.style.cssText = `position:absolute;left:${(Math.random()*100).toFixed(2)}%;top:${(Math.random()*100).toFixed(2)}%;width:${size}px;height:${size}px;background:${cols[(Math.random()*cols.length)|0]};image-rendering:pixelated;animation:twpix ${dur}s steps(2) ${delay}s infinite`;
+    sky.appendChild(d);
+  }
+})();
+
+// Mobile nav
+document.getElementById('btn-menu').addEventListener('click', () => {
+  const m = document.getElementById('mobile-menu');
+  m.style.display = m.style.display === 'flex' ? 'none' : 'flex';
+});
+
+// Ensure videos autoplay muted
+document.querySelectorAll('video').forEach(v => {
+  v.muted = true; v.defaultMuted = true;
+  const p = v.play(); if (p && p.catch) p.catch(() => {});
+});
+setTimeout(() => {
+  document.querySelectorAll('video').forEach(v => {
+    v.muted = true; const p = v.play(); if (p && p.catch) p.catch(() => {});
+  });
+}, 400);
+</script>
+</body>
+</html>
