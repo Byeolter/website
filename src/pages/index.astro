@@ -64,11 +64,11 @@
           <img src="/assets/crt.png" alt="Retro CRT computer" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:calc(1 - (var(--p) - .34) * 3.2)">
           <div style="position:absolute;left:9.5%;top:27.8%;width:80.5%;height:33.6%;overflow:hidden;background:linear-gradient(180deg,#08140d 0%,#040a07 100%)">
             <div style="position:absolute;inset:0;padding:7% 7% 7% 8%;display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-start;gap:1vh;opacity:calc(1 - (var(--p) - .42) * 3.2)">
-              <div style="font-family:'VT323',monospace;font-size:1.9vh;line-height:1.02;color:#6cff9b;text-shadow:0 0 6px rgba(108,255,155,.55)">BYEOLTER OS [Version 1.0]</div>
-              <div style="font-family:'VT323',monospace;font-size:1.9vh;line-height:1.02;color:#39b86a;text-shadow:0 0 5px rgba(57,184,106,.4)">(C) 2026 BYEOLTER STUDIO · SEOUL</div>
-              <div style="font-family:'VT323',monospace;font-size:1.9vh;line-height:1.02;color:#6cff9b;text-shadow:0 0 6px rgba(108,255,155,.55)">&gt; LOADING SMALL MAGIC<span style="animation:blink 1s steps(1) infinite">_</span></div>
-              <div style="font-family:'Press Start 2P','Galmuri11',monospace;font-size:2.6vh;line-height:1.2;color:#7dffae;text-shadow:0 0 10px rgba(108,255,155,.7);margin:.8vh 0 .3vh;letter-spacing:.2vh">✦ BYEOLTER</div>
-              <div style="font-family:'VT323',monospace;font-size:1.9vh;line-height:1.02;color:#6cff9b;text-shadow:0 0 6px rgba(108,255,155,.55)"><span style="animation:blink 1s steps(1) infinite">▶</span> SCROLL TO BOOT <span style="animation:blink 1s steps(1) infinite">▮</span></div>
+              <div id="crt-l0" style="font-family:'VT323',monospace;font-size:1.9vh;line-height:1.02;color:#6cff9b;text-shadow:0 0 6px rgba(108,255,155,.55)">BYEOLTER OS [Version 1.0]</div>
+              <div id="crt-l1" style="font-family:'VT323',monospace;font-size:1.9vh;line-height:1.02;color:#39b86a;text-shadow:0 0 5px rgba(57,184,106,.4)">(C) 2026 BYEOLTER STUDIO · SEOUL</div>
+              <div id="crt-l2" style="font-family:'VT323',monospace;font-size:1.9vh;line-height:1.02;color:#6cff9b;text-shadow:0 0 6px rgba(108,255,155,.55)">&gt; LOADING SMALL MAGIC<span style="animation:blink 1s steps(1) infinite">_</span></div>
+              <div id="crt-l3" style="font-family:'Press Start 2P','Galmuri11',monospace;font-size:2.6vh;line-height:1.2;color:#7dffae;text-shadow:0 0 10px rgba(108,255,155,.7);margin:.8vh 0 .3vh;letter-spacing:.2vh">✦ BYEOLTER</div>
+              <div id="crt-l4" style="font-family:'VT323',monospace;font-size:1.9vh;line-height:1.02;color:#6cff9b;text-shadow:0 0 6px rgba(108,255,155,.55)"><span style="animation:blink 1s steps(1) infinite">▶</span> SCROLL TO BOOT <span style="animation:blink 1s steps(1) infinite">▮</span></div>
             </div>
             <div style="position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(0,0,0,.34) 0 2px,rgba(0,0,0,0) 2px 4px)"></div>
             <div style="position:absolute;inset:0;pointer-events:none;box-shadow:inset 0 0 6vh rgba(0,0,0,.8), inset 0 0 1.5vh rgba(108,255,155,.12)"></div>
@@ -329,6 +329,69 @@ if (location.hash && location.hash.length > 1) {
     style.textContent = customCursor
       ? "* { cursor: url('https://cdn.cursors-4u.net/previews/starry-sun-c5238d99-32.webp') 32 32, auto !important; }"
       : '';
+  });
+})();
+
+// ── CRT screen easter egg ──────────────────────────────────
+(function() {
+  const lines = [
+    { id: 'crt-l0', text: 'BYEOLTER OS [Version 1.0]' },
+    { id: 'crt-l1', text: '(C) 2026 BYEOLTER STUDIO · SEOUL' },
+    { id: 'crt-l2', text: '> LOADING SMALL MAGIC_' },
+    { id: 'crt-l3', text: '✦ BYEOLTER' },
+    { id: 'crt-l4', text: '▶ SCROLL TO BOOT ▮' },
+  ];
+  let activeId = null;
+
+  lines.forEach(line => {
+    const el = document.getElementById(line.id);
+    if (!el) return;
+    line.originalHTML = el.innerHTML;
+    el.style.cursor = 'text';
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      activeId = line.id;
+      renderAll();
+    });
+  });
+
+  function renderAll() {
+    lines.forEach(line => {
+      const el = document.getElementById(line.id);
+      if (!el) return;
+      if (line.id === activeId) {
+        el.innerHTML = escHtml(line.text) + '<span style="animation:blink .5s steps(1) infinite;color:#7dffae">█</span>';
+      } else {
+        el.innerHTML = line.originalHTML;
+      }
+    });
+  }
+
+  function escHtml(s) {
+    return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  function deactivate() {
+    activeId = null;
+    lines.forEach(line => {
+      const el = document.getElementById(line.id);
+      if (el) el.innerHTML = line.originalHTML;
+    });
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (!activeId) return;
+    const line = lines.find(l => l.id === activeId);
+    if (!line) return;
+    if (e.key === 'Escape') { deactivate(); return; }
+    if (e.key === 'Backspace') { e.preventDefault(); line.text = line.text.slice(0, -1); renderAll(); return; }
+    if (e.key.length === 1) { line.text += e.key; renderAll(); }
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!activeId) return;
+    const onLine = lines.some(l => document.getElementById(l.id)?.contains(e.target));
+    if (!onLine) deactivate();
   });
 })();
 
