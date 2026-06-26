@@ -576,7 +576,7 @@ function startGame() {
   const onTap = (e) => { e.preventDefault(); gameInput(); };
   window.addEventListener('resize', onResize);
   window.addEventListener('keydown', onKey);
-  cv.addEventListener('pointerdown', onTap);
+  gameCanvas.addEventListener('pointerdown', onTap);
 
   glast = performance.now(); lastTickAt = glast;
   const tick = (now) => {
@@ -596,7 +596,7 @@ function startGame() {
   startGame._cleanup = () => {
     window.removeEventListener('resize', onResize);
     window.removeEventListener('keydown', onKey);
-    cv.removeEventListener('pointerdown', onTap);
+    gameCanvas.removeEventListener('pointerdown', onTap);
   };
 }
 
