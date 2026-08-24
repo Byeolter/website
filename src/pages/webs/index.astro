@@ -1,0 +1,46 @@
+---
+// Byeolter Webs Page
+---
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Byeolter Webs — tiny places to visit on the internet.">
+<title>Webs | Byeolter</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/galmuri/dist/galmuri.css" rel="stylesheet">
+<style>
+  *{box-sizing:border-box} html,body{margin:0;padding:0} ::selection{background:#ff5db1;color:#0a0a1f}
+  @keyframes twpix{0%,100%{opacity:.2}50%{opacity:1}} @keyframes blink{0%,49%{opacity:1}50%,100%{opacity:0}}
+  @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
+  @keyframes riseIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+  @media (max-width:760px){[data-nav-desktop]{display:none!important}[data-nav-burger]{display:flex!important}}
+</style>
+</head>
+<body>
+<div style="position:relative;min-height:100vh;background:radial-gradient(120% 80% at 50% -10%,#241344 0%,rgba(36,19,68,0) 55%),#0a0a1f;color:#eaf0ff;font-family:'VT323','Galmuri11',monospace">
+  <div id="sky" style="position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:1"></div>
+  <div style="position:relative;z-index:5">
+    <div style="position:sticky;top:0;z-index:40">
+      <nav style="display:flex;align-items:center;justify-content:space-between;gap:14px;padding:16px clamp(16px,4vw,40px);border-bottom:3px solid #000;background:#0d0d28;box-shadow:0 3px 0 #b88cff">
+        <a href="/" style="display:flex;align-items:center;gap:10px;text-decoration:none;color:#eaf0ff"><span style="font-size:25px">★</span><span style="font-family:'Press Start 2P','Galmuri11',monospace;font-size:13px;color:#ffd23f;letter-spacing:1px">BYEOLTER</span></a>
+        <div style="display:flex;align-items:center;gap:14px" data-nav-desktop=""><a href="/apps/" style="font-family:'Press Start 2P','Galmuri11',monospace;font-size:9px;color:#4fe0d8;text-decoration:none;padding:9px 11px">APPS</a><a href="/games/" style="font-family:'Press Start 2P','Galmuri11',monospace;font-size:9px;color:#ff5db1;text-decoration:none;padding:9px 11px">GAMES</a><span style="font-family:'Press Start 2P','Galmuri11',monospace;font-size:9px;color:#0a0a1f;background:#b88cff;padding:9px 11px;border:2px solid #000;box-shadow:3px 3px 0 #000">WEBS</span><a href="/#contact" style="font-family:'Press Start 2P','Galmuri11',monospace;font-size:9px;color:#9bf24a;text-decoration:none;padding:9px 11px">CONTACT</a></div>
+        <button id="btn-menu" aria-label="Menu" style="display:none;background:#b88cff;border:3px solid #000;width:42px;height:38px;cursor:pointer;box-shadow:3px 3px 0 #000;align-items:center;justify-content:center;flex-direction:column;gap:4px" data-nav-burger=""><span style="width:18px;height:3px;background:#0a0a1f;display:block"></span><span style="width:18px;height:3px;background:#0a0a1f;display:block"></span><span style="width:18px;height:3px;background:#0a0a1f;display:block"></span></button>
+      </nav>
+      <div id="mobile-menu" style="display:none;flex-direction:column;background:#0d0d28;border-bottom:3px solid #000"><a href="/apps/" style="font-family:'Press Start 2P','Galmuri11',monospace;font-size:10px;color:#4fe0d8;text-decoration:none;padding:16px 24px;border-bottom:2px solid #1d1d44">APPS</a><a href="/games/" style="font-family:'Press Start 2P','Galmuri11',monospace;font-size:10px;color:#ff5db1;text-decoration:none;padding:16px 24px;border-bottom:2px solid #1d1d44">GAMES</a><span style="font-family:'Press Start 2P','Galmuri11',monospace;font-size:10px;color:#0a0a1f;background:#b88cff;padding:16px 24px;border-bottom:2px solid #1d1d44">WEBS</span><a href="/#contact" style="font-family:'Press Start 2P','Galmuri11',monospace;font-size:10px;color:#9bf24a;text-decoration:none;padding:16px 24px">CONTACT</a></div>
+    </div>
+    <div style="overflow:hidden;background:#b88cff;border-top:3px solid #000;border-bottom:3px solid #000;padding:9px 0"><div style="white-space:nowrap;font-family:'Press Start 2P','Galmuri11',monospace;font-size:10px;color:#0a0a1f;text-align:center">★ WEB WORLDS ★ TINY PLACES TO VISIT ★ MADE IN SEOUL ★</div></div>
+    <header style="padding:clamp(46px,8vw,96px) clamp(18px,5vw,40px) 42px;text-align:center"><div style="font-family:'Press Start 2P','Galmuri11',monospace;font-size:11px;color:#b88cff;letter-spacing:2px;margin-bottom:22px;animation:riseIn .5s ease both">LEVEL 03</div><h1 style="font-family:'Press Start 2P','Galmuri11',monospace;font-size:clamp(44px,12vw,108px);line-height:1.1;margin:0;color:#ffd23f;text-shadow:6px 6px 0 #ff5db1;letter-spacing:3px">WEBS</h1><p style="font-family:'Press Start 2P','Galmuri11',monospace;font-size:clamp(10px,2vw,13px);line-height:1.6;color:#9bf24a;margin:26px auto 0;letter-spacing:1px">TINY PLACES TO VISIT ONLINE.</p><p style="font-size:clamp(20px,2.6vw,26px);line-height:1.4;color:#cdd6ff;max-width:46ch;margin:20px auto 0">Interactive little corners of the internet, made for a quick hello, a curious click, or a tiny break.</p><div style="margin-top:30px;color:#b88cff;font-size:16px;animation:bob 1.6s ease-in-out infinite">▼</div></header>
+    <main style="padding:0 clamp(16px,4vw,40px) clamp(56px,8vw,100px)"><div style="max-width:960px;margin:0 auto"><div style="display:flex;align-items:center;gap:16px;margin-bottom:40px"><span style="font-family:'Press Start 2P','Galmuri11',monospace;font-size:clamp(12px,2.4vw,16px);color:#eaf0ff;letter-spacing:1px">WEB DIRECTORY</span><span style="flex:1;height:3px;background:repeating-linear-gradient(90deg,#39265d 0 8px,transparent 8px 14px)"></span><span style="font-family:'Press Start 2P','Galmuri11',monospace;font-size:10px;color:#a481d1">00 ONLINE</span></div><div style="border:3px dashed #39265d;background:rgba(14,16,48,.4);padding:clamp(30px,5vw,48px) clamp(20px,4vw,40px);text-align:center"><div style="font-family:'Press Start 2P','Galmuri11',monospace;font-size:clamp(26px,6vw,44px);color:#39265d;line-height:1">?</div><div style="font-family:'Press Start 2P','Galmuri11',monospace;font-size:clamp(11px,2.4vw,14px);color:#b88cff;letter-spacing:1px;margin-top:20px">FIRST WORLD LOADING</div><p style="font-size:clamp(18px,2.2vw,22px);line-height:1.4;color:#8089c0;max-width:38ch;margin:14px auto 0">A few web worlds are being wired together. Come back soon for the first launch.</p><span style="display:inline-flex;align-items:center;gap:9px;margin-top:26px;font-family:'Press Start 2P','Galmuri11',monospace;font-size:9px;color:#b88cff;border:2px solid #39265d;padding:11px 14px;letter-spacing:1px"><span style="width:7px;height:7px;background:#b88cff;display:block;animation:blink 1.4s steps(1) infinite"></span>COMING SOON</span></div></div></main>
+    <footer style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;padding:18px clamp(16px,4vw,40px);border-top:3px solid #000;background:#0d0d28;font-family:'Press Start 2P','Galmuri11',monospace;font-size:8px;color:#6a73b8"><span style="color:#ffd23f">© 2026 BYEOLTER</span><div style="display:flex;flex-wrap:wrap;align-items:center;gap:24px"><a href="/privacy/" style="color:#4fe0d8;text-decoration:none">PRIVACY</a><a href="https://github.com/Byeolter" target="_blank" rel="noopener" style="color:#cdd6ff;text-decoration:none">GITHUB</a></div></footer>
+  </div>
+</div>
+<script>
+(function(){const sky=document.getElementById('sky');for(let i=0;i<70;i++){const d=document.createElement('div');const size=Math.random()<.7?2:3;d.style.cssText=`position:absolute;left:${(Math.random()*100).toFixed(2)}%;top:${(Math.random()*100).toFixed(2)}%;width:${size}px;height:${size}px;background:#b88cff;animation:twpix ${(1.4+Math.random()*2).toFixed(2)}s steps(2) ${(Math.random()*3).toFixed(2)}s infinite`;sky.appendChild(d)}})();
+document.getElementById('btn-menu').addEventListener('click',()=>{const m=document.getElementById('mobile-menu');m.style.display=m.style.display==='flex'?'none':'flex'});
+</script>
+</body>
+</html>
