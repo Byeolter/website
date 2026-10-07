@@ -6,8 +6,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Byeolter Webs — tiny places to visit on the internet.">
-<title>Webs | Byeolter</title>
+<meta name="description" content="Byeolter가 만든 작은 웹 프로젝트를 둘러보세요.">
+<title>웹 | Byeolter</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
@@ -16,8 +16,10 @@
 <style>
   *{box-sizing:border-box} html,body{margin:0;padding:0} ::selection{background:#ff5db1;color:#0a0a1f}
   @keyframes twpix{0%,100%{opacity:.2}50%{opacity:1}} @keyframes blink{0%,49%{opacity:1}50%,100%{opacity:0}}
+  @keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
   @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
   @keyframes riseIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+  @media(prefers-reduced-motion:reduce){.web-marquee-track{animation:none!important}}
   @media (max-width:760px){[data-nav-desktop]{display:none!important}[data-nav-burger]{display:flex!important}}
 </style>
 </head>
@@ -33,8 +35,8 @@
       </nav>
       <div id="mobile-menu" style="display:none;flex-direction:column;background:#0d0d28;border-bottom:3px solid #000"><a href="/apps/" style="font-family:'Press Start 2P','Galmuri11',monospace;font-size:10px;color:#4fe0d8;text-decoration:none;padding:16px 24px;border-bottom:2px solid #1d1d44">APPS</a><a href="/games/" style="font-family:'Press Start 2P','Galmuri11',monospace;font-size:10px;color:#ff5db1;text-decoration:none;padding:16px 24px;border-bottom:2px solid #1d1d44">GAMES</a><span style="font-family:'Press Start 2P','Galmuri11',monospace;font-size:10px;color:#0a0a1f;background:#b88cff;padding:16px 24px;border-bottom:2px solid #1d1d44">WEBS</span><a href="/#contact" style="font-family:'Press Start 2P','Galmuri11',monospace;font-size:10px;color:#9bf24a;text-decoration:none;padding:16px 24px">CONTACT</a></div>
     </div>
-    <div style="overflow:hidden;background:#b88cff;border-top:3px solid #000;border-bottom:3px solid #000;padding:9px 0"><div style="white-space:nowrap;font-family:'Press Start 2P','Galmuri11',monospace;font-size:10px;color:#0a0a1f;text-align:center">★ WEB WORLDS ★ TINY PLACES TO VISIT ★ MADE IN SEOUL ★</div></div>
-    <header style="padding:clamp(46px,8vw,96px) clamp(18px,5vw,40px) 42px;text-align:center"><div style="font-family:'Press Start 2P','Galmuri11',monospace;font-size:11px;color:#b88cff;letter-spacing:2px;margin-bottom:22px;animation:riseIn .5s ease both">LEVEL 03</div><h1 style="font-family:'Press Start 2P','Galmuri11',monospace;font-size:clamp(44px,12vw,108px);line-height:1.1;margin:0;color:#ffd23f;text-shadow:6px 6px 0 #ff5db1;letter-spacing:3px">WEBS</h1><p style="font-family:'Press Start 2P','Galmuri11',monospace;font-size:clamp(10px,2vw,13px);line-height:1.6;color:#9bf24a;margin:26px auto 0;letter-spacing:1px">TINY PLACES TO VISIT ONLINE.</p><p style="font-size:clamp(20px,2.6vw,26px);line-height:1.4;color:#cdd6ff;max-width:46ch;margin:20px auto 0">Interactive little corners of the internet, made for a quick hello, a curious click, or a tiny break.</p><div style="margin-top:30px;color:#b88cff;font-size:16px;animation:bob 1.6s ease-in-out infinite">▼</div></header>
+    <div aria-hidden="true" style="overflow:hidden;background:#b88cff;border-top:3px solid #000;border-bottom:3px solid #000;padding:9px 0"><div class="web-marquee-track" style="display:inline-flex;white-space:nowrap;animation:marquee 20s linear infinite;font-family:'Press Start 2P','Galmuri11',monospace;font-size:10px;color:#0a0a1f"><span style="padding-right:28px">★ WEB WORLDS ★ TINY PLACES TO VISIT ★ MADE IN SEOUL ★ WEB WORLDS ★ TINY PLACES TO VISIT ★ MADE IN SEOUL&nbsp;</span><span style="padding-right:28px">★ WEB WORLDS ★ TINY PLACES TO VISIT ★ MADE IN SEOUL ★ WEB WORLDS ★ TINY PLACES TO VISIT ★ MADE IN SEOUL&nbsp;</span></div></div>
+    <header style="padding:clamp(46px,8vw,96px) clamp(18px,5vw,40px) 42px;text-align:center"><div style="font-family:'Press Start 2P','Galmuri11',monospace;font-size:11px;color:#b88cff;letter-spacing:2px;margin-bottom:22px;animation:riseIn .5s ease both">LEVEL 03</div><h1 style="font-family:'Press Start 2P','Galmuri11',monospace;font-size:clamp(44px,12vw,108px);line-height:1.1;margin:0;color:#ffd23f;text-shadow:6px 6px 0 #ff5db1;letter-spacing:3px">WEBS</h1><p style="font-family:'Press Start 2P','Galmuri11',monospace;font-size:clamp(10px,2vw,13px);line-height:1.6;color:#9bf24a;margin:26px auto 0;letter-spacing:1px">온라인에서 만나는 작은 공간들.</p><p style="font-size:clamp(20px,2.6vw,26px);line-height:1.4;color:#cdd6ff;max-width:46ch;margin:20px auto 0">가볍게 둘러보고, 궁금한 곳을 눌러보고, 잠시 쉬어갈 수 있는 작은 웹 경험을 만들어요.</p><div style="margin-top:30px;color:#b88cff;font-size:16px;animation:bob 1.6s ease-in-out infinite">▼</div></header>
     <main style="padding:0 clamp(16px,4vw,40px) clamp(56px,8vw,100px)">
       <div style="max-width:1080px;margin:0 auto">
         <div style="display:flex;align-items:center;gap:16px;margin-bottom:40px">
