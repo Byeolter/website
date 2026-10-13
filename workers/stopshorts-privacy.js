@@ -1,4 +1,4 @@
-const ORIGIN = "https://byeolter.com/stopshorts/privacy/";
+const POLICY_URL = "https://byeolter.com/stopshorts/privacy/";
 
 export default {
   async fetch(request) {
@@ -11,25 +11,14 @@ export default {
       });
     }
 
-    if (incomingUrl.pathname === "/") {
-      return Response.redirect("https://stopshorts.byeolter.com/privacy", 302);
-    }
-
-    if (incomingUrl.pathname !== "/privacy" && incomingUrl.pathname !== "/privacy/") {
+    if (
+      incomingUrl.pathname !== "/" &&
+      incomingUrl.pathname !== "/privacy" &&
+      incomingUrl.pathname !== "/privacy/"
+    ) {
       return new Response("Not found", { status: 404 });
     }
 
-    const upstream = await fetch(ORIGIN, {
-      method: request.method,
-      headers: { Accept: request.headers.get("Accept") ?? "text/html" },
-    });
-    const headers = new Headers(upstream.headers);
-    headers.set("Cache-Control", "public, max-age=300");
-    headers.set("X-Robots-Tag", "index, follow");
-
-    return new Response(upstream.body, {
-      status: upstream.status,
-      headers,
-    });
+    return Response.redirect(POLICY_URL, 302);
   },
 };
