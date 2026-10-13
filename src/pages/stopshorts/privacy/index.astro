@@ -1,0 +1,194 @@
+---
+const title = '개인정보 처리방침 | 쇼츠 그만';
+const updatedAt = '2026년 10월 13일';
+---
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="쇼츠 그만 앱의 개인정보 처리방침입니다. 접근성 서비스와 Google AdMob 광고 SDK의 데이터 처리를 안내합니다."
+    />
+    <link rel="canonical" href="https://stopshorts.byeolter.com/privacy" />
+    <meta name="theme-color" content="#111111" />
+    <title>{title}</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        font-family: Pretendard, "Apple SD Gothic Neo", "Noto Sans KR", system-ui, sans-serif;
+        color: #f5f5f5;
+        background: #111;
+        font-synthesis: none;
+        text-rendering: optimizeLegibility;
+      }
+      * { box-sizing: border-box; }
+      body { margin: 0; min-width: 320px; line-height: 1.75; }
+      a { color: #ff4d5a; text-underline-offset: 3px; }
+      a:hover { color: #ff737d; }
+      .topbar { border-bottom: 1px solid #303030; background: #111; }
+      .topbar-inner, main, footer { width: min(860px, calc(100% - 40px)); margin: 0 auto; }
+      .topbar-inner { min-height: 72px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+      .brand { display: inline-flex; align-items: center; gap: 10px; color: #fff; font-weight: 750; text-decoration: none; letter-spacing: -.03em; }
+      .brand-mark { display: grid; width: 34px; height: 24px; place-items: center; border-radius: 7px; background: #f00; color: white; font-size: 15px; line-height: 1; }
+      .back-link { color: #c7c7c7; font-size: 14px; text-decoration: none; }
+      main { padding: 64px 0 84px; }
+      .hero { margin-bottom: 34px; }
+      .eyebrow { margin: 0 0 12px; color: #ff4d5a; font-size: 12px; font-weight: 750; letter-spacing: .12em; text-transform: uppercase; }
+      h1 { margin: 0; font-size: clamp(31px, 7vw, 46px); line-height: 1.2; letter-spacing: -.055em; }
+      .lead { max-width: 680px; margin: 18px 0 0; color: #c8c8c8; font-size: 17px; }
+      .updated { display: inline-flex; align-items: center; gap: 8px; margin-top: 20px; padding: 7px 12px; border: 1px solid #343434; border-radius: 999px; color: #b8b8b8; font-size: 13px; }
+      .summary { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: 30px 0 36px; }
+      .summary-item { padding: 16px; border: 1px solid #323232; border-radius: 14px; background: #1b1b1b; }
+      .summary-item strong { display: block; margin-bottom: 5px; color: #fff; font-size: 14px; }
+      .summary-item span { color: #b8b8b8; font-size: 13px; line-height: 1.55; }
+      .policy-section { margin-top: 14px; padding: clamp(20px, 4vw, 28px); border: 1px solid #303030; border-radius: 16px; background: #1b1b1b; }
+      h2 { margin: 0 0 14px; font-size: 20px; line-height: 1.4; letter-spacing: -.025em; }
+      h3 { margin: 20px 0 8px; font-size: 16px; }
+      p { margin: 10px 0; color: #d0d0d0; }
+      ul { display: grid; gap: 8px; margin: 10px 0 0; padding-left: 22px; color: #d0d0d0; }
+      li::marker { color: #ff4d5a; }
+      .table-wrap { overflow-x: auto; margin-top: 16px; border: 1px solid #393939; border-radius: 12px; }
+      table { width: 100%; min-width: 660px; border-collapse: collapse; font-size: 14px; }
+      th, td { padding: 13px 14px; border-bottom: 1px solid #383838; text-align: left; vertical-align: top; }
+      th { color: #fff; background: #242424; font-weight: 700; }
+      td { color: #d0d0d0; }
+      tr:last-child td { border-bottom: 0; }
+      .note { margin-top: 14px; padding: 13px 15px; border-left: 3px solid #f00; border-radius: 0 9px 9px 0; background: #242020; color: #dedede; }
+      .contact { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px; }
+      .contact a { display: inline-flex; min-height: 44px; align-items: center; padding: 8px 16px; border-radius: 10px; background: #f00; color: #fff; font-weight: 700; text-decoration: none; }
+      footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; padding: 22px 0 30px; border-top: 1px solid #303030; color: #9e9e9e; font-size: 13px; }
+      footer a { color: #c7c7c7; text-decoration: none; }
+      @media (max-width: 640px) {
+        main { padding-top: 42px; }
+        .summary { grid-template-columns: 1fr; }
+        .topbar-inner, main, footer { width: min(100% - 32px, 860px); }
+        .lead { font-size: 15px; }
+      }
+    </style>
+  </head>
+  <body>
+    <a href="#policy" style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;" onfocus="this.style.left='16px';this.style.top='16px';this.style.width='auto';this.style.height='auto';this.style.padding='10px';this.style.background='#111';this.style.zIndex='10'">본문으로 건너뛰기</a>
+    <div class="topbar">
+      <div class="topbar-inner">
+        <a class="brand" href="https://byeolter.com/" aria-label="Byeolter 홈">
+          <span class="brand-mark" aria-hidden="true">▶</span>
+          <span>쇼츠 그만</span>
+        </a>
+        <a class="back-link" href="https://byeolter.com/">Byeolter</a>
+      </div>
+    </div>
+
+    <main id="policy">
+      <header class="hero">
+        <p class="eyebrow">Stop Shorts · Privacy</p>
+        <h1>개인정보 처리방침</h1>
+        <p class="lead">
+          쇼츠 그만은 YouTube의 쇼츠와 댓글 화면을 제어하는 Android 앱입니다.
+          앱 설정과 차단 기록은 기기에 저장하며, 광고는 Google AdMob SDK를 통해 제공합니다.
+        </p>
+        <span class="updated">시행일 <time datetime="2026-10-13">{updatedAt}</time></span>
+      </header>
+
+      <div class="summary" aria-label="핵심 안내">
+        <div class="summary-item"><strong>회원가입 없음</strong><span>앱 운영자가 계정이나 프로필을 만들지 않습니다.</span></div>
+        <div class="summary-item"><strong>차단 정보는 기기 안에</strong><span>접근성 화면 정보는 차단을 위해 일시 처리합니다.</span></div>
+        <div class="summary-item"><strong>광고 SDK 사용</strong><span>Google AdMob이 광고 관련 기기 정보를 처리할 수 있습니다.</span></div>
+      </div>
+
+      <section class="policy-section">
+        <h2>1. 운영자와 적용 범위</h2>
+        <p>이 방침은 Byeolter가 제공하는 Android 앱 「쇼츠 그만」(Google Play 표시명: 「쇼츠 그만, 댓글 그만 - 유튜브 사용량 제어 어플」, 패키지명: <code>com.byeolter.stopshorts</code>)의 개인정보 처리에 적용됩니다.</p>
+        <p>개인정보처리자 및 문의 창구는 <strong>Byeolter</strong>입니다. 개인정보 보호 관련 문의는 <a href="mailto:contact@byeolter.com">contact@byeolter.com</a>으로 보내 주세요.</p>
+      </section>
+
+      <section class="policy-section">
+        <h2>2. 처리하는 정보와 목적</h2>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>정보</th><th>처리 목적과 방식</th><th>보관 및 삭제</th></tr></thead>
+            <tbody>
+              <tr>
+                <td>차단 설정, 실험 기능 설정, 오늘의 차단 횟수</td>
+                <td>사용자가 선택한 기능을 유지하고 화면에 오늘의 차단 횟수를 표시합니다. Android 앱 전용 내부 저장소에 보관하며 Byeolter 서버로 전송하지 않습니다.</td>
+                <td>앱 데이터 삭제 또는 앱 제거 시 삭제됩니다. 일일 횟수는 날짜가 바뀌면 화면에서 0으로 표시되고 다음 기록 시 이전 값이 갱신됩니다.</td>
+              </tr>
+              <tr>
+                <td>YouTube 접근성 화면 정보</td>
+                <td>YouTube가 접근성 서비스에 제공하는 화면 텍스트, UI 요소 ID, 버튼 상태, 화면 위치 및 접근성 이벤트를 기기에서 일시적으로 확인해 쇼츠·댓글 화면을 식별하고 닫습니다. 이 목적 외로 사용하지 않으며 앱 운영자에게 전송하지 않습니다.</td>
+                <td>차단 판단에 필요한 동안만 메모리에서 처리하고 앱 설정으로 저장하지 않습니다. 디버그 빌드에서는 문제 진단용 화면 요소 정보가 기기의 Android 로그에 기록될 수 있습니다. 일반 공개 릴리스 빌드에는 실험실과 이 진단 로그가 포함되지 않습니다.</td>
+              </tr>
+              <tr>
+                <td>광고 식별자, IP 주소, 앱 및 광고 상호작용, 진단 정보, 앱 세트 ID 등</td>
+                <td>Google Mobile Ads SDK가 광고 제공·측정, 분석 및 사기 방지를 위해 자동으로 수집·공유할 수 있습니다. 자세한 항목은 <a href="https://developers.google.com/admob/android/next-gen/privacy/play-data-disclosure" target="_blank" rel="noopener noreferrer">Google의 GMA Next-Gen 데이터 공개 안내</a>를 확인하세요.</td>
+                <td>Google이 자체 정책에 따라 보관·삭제합니다. Android 설정에서 광고 ID를 재설정하거나 삭제할 수 있습니다.</td>
+              </tr>
+              <tr>
+                <td>사용자가 문의 이메일로 보내는 주소와 내용</td>
+                <td>문의에 답변하고 요청을 처리하는 데 사용합니다.</td>
+                <td>문의 처리가 끝날 때까지 보관하고, 법령상 보관이 필요한 경우 해당 기간 동안 보관합니다.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="note">앱에는 회원가입 기능이나 사용자 계정이 없습니다. Byeolter는 YouTube 계정, 비밀번호, 시청 기록을 서버로 수집하지 않습니다. 접근성 서비스는 사용자가 Android 설정에서 직접 켜고 끌 수 있습니다.</p>
+      </section>
+
+      <section class="policy-section">
+        <h2>3. 접근성 서비스 사용</h2>
+        <p>쇼츠·댓글 차단을 켜고 Android 접근성 설정에서 서비스를 허용하면, 서비스는 YouTube가 현재 화면에 제공하는 접근성 정보를 기기 안에서 확인합니다. 이 정보를 사용해 쇼츠 화면을 닫거나 댓글 패널을 내립니다. 앱이 YouTube 화면 정보를 자체 서버로 전송하거나 사용자 식별 목적으로 저장하지 않습니다.</p>
+        <p>YouTube가 아닌 앱에서는 화면 내용을 읽지 않고 앱 전환을 감지해 차단용 화면 표시를 정리합니다. 차단 기능을 중지하려면 앱의 토글을 끄거나 Android 접근성 설정에서 서비스를 해제하면 됩니다.</p>
+      </section>
+
+      <section class="policy-section">
+        <h2>4. 제3자 제공 및 광고 서비스</h2>
+        <p>Byeolter는 앱 설정이나 접근성 화면 정보를 제3자에게 제공하지 않습니다. 다만 앱에 포함된 Google Mobile Ads SDK는 광고를 요청하고 표시하는 과정에서 아래 정보 범주를 Google에 자동으로 전송할 수 있습니다.</p>
+        <ul>
+          <li>기기의 IP 주소(대략적인 지역 추정에 사용될 수 있음)</li>
+          <li>앱 실행 및 광고 탭·노출·동영상 보기 등 제품 상호작용</li>
+          <li>앱 및 SDK 성능과 관련된 진단 정보</li>
+          <li>Android 광고 ID, 앱 세트 ID 및 해당되는 경우 기기에 로그인된 계정 관련 식별자</li>
+        </ul>
+        <p>처리 목적은 광고 제공·측정, 분석 및 사기 방지입니다. 광고의 개인화 여부는 Google의 설정, 이용자의 기기 설정, 지역 및 적용되는 동의 요건에 따라 달라질 수 있습니다. Google은 전송 중인 SDK 수집 정보를 TLS로 암호화한다고 안내합니다.</p>
+        <p>Google의 데이터 처리는 <a href="https://policies.google.com/privacy?hl=ko" target="_blank" rel="noopener noreferrer">Google 개인정보처리방침</a> 및 Google의 관련 광고 정책을 따릅니다. 광고 ID는 Android 설정의 광고 또는 개인정보 보호 메뉴에서 재설정하거나 삭제할 수 있습니다.</p>
+      </section>
+
+      <section class="policy-section">
+        <h2>5. 국외 이전</h2>
+        <p>Google Mobile Ads SDK 사용 시 광고 요청과 SDK 통신 과정에서 광고 관련 정보가 Google LLC(미국) 및 Google이 서비스를 제공하는 국가로 전송되어 처리될 수 있습니다. 전송 방식은 인터넷을 통한 SDK 요청이며, 목적은 광고 제공·측정, 분석 및 사기 방지입니다. Google의 보유 기간과 삭제 기준은 Google 정책에 따릅니다.</p>
+        <p>이 개인정보 처리방침 웹페이지는 Cloudflare를 통해 제공됩니다. 페이지 열람 시 IP 주소, 요청 경로, 브라우저·기기 정보 및 요청 시각 등 접속 정보가 콘텐츠 전달과 보안 목적으로 처리될 수 있습니다. 자세한 내용은 <a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener noreferrer">Cloudflare 개인정보처리방침</a>을 확인하세요.</p>
+      </section>
+
+      <section class="policy-section">
+        <h2>6. 정보주체의 권리와 행사 방법</h2>
+        <p>이용자는 관련 법령에 따라 개인정보 열람, 정정, 삭제, 처리 정지 및 동의 철회를 요청할 수 있습니다. 요청은 <a href="mailto:contact@byeolter.com">contact@byeolter.com</a>으로 보내 주세요. 본인 확인이 필요한 경우 합리적인 범위에서 확인 절차를 안내합니다.</p>
+        <p>기기에 저장된 앱 설정과 차단 횟수는 Android 설정의 앱 정보에서 저장공간을 삭제하거나 앱을 제거해 지울 수 있습니다. 광고 관련 설정은 Android 개인정보 보호 설정에서 관리할 수 있습니다.</p>
+      </section>
+
+      <section class="policy-section">
+        <h2>7. 안전성 확보와 처리 위탁</h2>
+        <p>앱 설정은 Android의 앱별 내부 저장소에 보관되어 다른 일반 앱이 직접 접근할 수 없도록 Android 운영체제의 앱 샌드박스 보호를 받습니다. 광고 관련 데이터 전송의 암호화와 처리 안전성은 Google의 SDK 및 서비스 정책을 따릅니다.</p>
+        <p>Byeolter는 자체 서버에서 앱 사용자의 접근성 정보나 앱 설정을 처리하지 않습니다. 광고 서비스를 위해 Google이 독립적으로 처리하는 정보와 웹페이지 제공을 위한 Cloudflare의 접속 정보 처리에 대해서는 각 사업자의 개인정보처리방침을 함께 확인할 수 있습니다.</p>
+      </section>
+
+      <section class="policy-section">
+        <h2>8. 방침 변경</h2>
+        <p>앱 기능, 사용 SDK 또는 관련 법령이 바뀌면 이 방침을 수정할 수 있습니다. 변경 내용과 시행일은 이 페이지에 게시합니다. 중요한 변경은 앱 화면이나 Google Play 공지를 통해 알리겠습니다.</p>
+      </section>
+
+      <section class="policy-section contact" aria-labelledby="contact-heading">
+        <div>
+          <h2 id="contact-heading">개인정보 문의</h2>
+          <p>개인정보 관련 요청이나 문의를 보내 주세요.</p>
+        </div>
+        <a href="mailto:contact@byeolter.com">contact@byeolter.com</a>
+      </section>
+    </main>
+
+    <footer>
+      <span>© 2026 Byeolter · 쇼츠 그만</span>
+      <a href="https://byeolter.com/">byeolter.com</a>
+    </footer>
+  </body>
+</html>
