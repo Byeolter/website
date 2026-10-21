@@ -1,0 +1,186 @@
+---
+const title = '개인정보 처리방침 | 그만 봐';
+const updatedAt = '2026년 10월 21일';
+---
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="그만 봐 iOS 앱의 개인정보 처리방침입니다. Screen Time 앱 선택 정보, 규칙, 사용자가 고른 사진의 처리 방식을 안내합니다."
+    />
+    <link rel="canonical" href="https://byeolter.com/stopwatching/privacy/" />
+    <meta name="theme-color" content="#f2f2f7" />
+    <title>{title}</title>
+    <style>
+      :root {
+        color-scheme: light;
+        font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+        color: #17171a;
+        background: #f2f2f7;
+        font-synthesis: none;
+        text-rendering: optimizeLegibility;
+      }
+      * { box-sizing: border-box; }
+      body { margin: 0; min-width: 320px; line-height: 1.75; }
+      a { color: #087aff; text-underline-offset: 3px; }
+      a:hover { color: #005ecb; }
+      .topbar { border-bottom: 1px solid #dedee4; background: rgba(255,255,255,.78); }
+      .topbar-inner, main, footer { width: min(860px, calc(100% - 40px)); margin: 0 auto; }
+      .skip-link { position: absolute; left: -9999px; top: auto; width: 1px; height: 1px; overflow: hidden; }
+      .skip-link:focus { left: 16px; top: 16px; z-index: 10; width: auto; height: auto; padding: 10px 14px; border-radius: 8px; background: #fff; }
+      .topbar-inner { min-height: 68px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+      .brand { color: #17171a; font-weight: 750; text-decoration: none; letter-spacing: -.03em; }
+      .back-link { color: #686870; font-size: 14px; text-decoration: none; }
+      main { padding: 60px 0 80px; }
+      .hero { margin-bottom: 30px; }
+      .eyebrow { margin: 0 0 10px; color: #087aff; font-size: 12px; font-weight: 750; letter-spacing: .13em; text-transform: uppercase; }
+      h1 { margin: 0; font-size: clamp(32px, 7vw, 46px); line-height: 1.2; letter-spacing: -.055em; }
+      .lead { max-width: 700px; margin: 16px 0 0; color: #62626b; font-size: 17px; }
+      .updated { display: inline-flex; margin-top: 18px; padding: 6px 12px; border: 1px solid #dedee4; border-radius: 999px; color: #62626b; font-size: 13px; background: #fff; }
+      .summary { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: 28px 0 32px; }
+      .summary-item { padding: 16px; border: 1px solid #e5e5eb; border-radius: 16px; background: #fff; }
+      .summary-item strong { display: block; margin-bottom: 4px; font-size: 14px; }
+      .summary-item span { color: #686870; font-size: 13px; line-height: 1.6; }
+      .policy-section { margin-top: 14px; padding: clamp(20px, 4vw, 28px); border: 1px solid #e5e5eb; border-radius: 18px; background: #fff; }
+      h2 { margin: 0 0 12px; font-size: 20px; line-height: 1.4; letter-spacing: -.025em; }
+      p { margin: 9px 0; color: #45454d; }
+      ul { display: grid; gap: 7px; margin: 10px 0 0; padding-left: 22px; color: #45454d; }
+      li::marker { color: #087aff; }
+      .table-wrap { overflow-x: auto; margin-top: 14px; border: 1px solid #e5e5eb; border-radius: 12px; }
+      table { width: 100%; min-width: 620px; border-collapse: collapse; font-size: 14px; }
+      th, td { padding: 12px 13px; border-bottom: 1px solid #e9e9ee; text-align: left; vertical-align: top; }
+      th { color: #222228; background: #f7f7fa; font-weight: 700; }
+      td { color: #45454d; }
+      tr:last-child td { border-bottom: 0; }
+      .note { margin-top: 14px; padding: 13px 15px; border-left: 3px solid #087aff; border-radius: 0 10px 10px 0; background: #eff6ff; color: #34343b; }
+      .contact { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px; }
+      .contact h2 { margin-bottom: 4px; }
+      .contact p { margin: 0; }
+      .contact a { display: inline-flex; min-height: 44px; align-items: center; padding: 8px 16px; border-radius: 12px; background: #087aff; color: #fff; font-weight: 700; text-decoration: none; }
+      footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; padding: 20px 0 28px; border-top: 1px solid #dedee4; color: #777780; font-size: 13px; }
+      footer a { color: #62626b; text-decoration: none; }
+      @media (max-width: 640px) {
+        main { padding-top: 42px; }
+        .summary { grid-template-columns: 1fr; }
+        .topbar-inner, main, footer { width: min(100% - 32px, 860px); }
+        .lead { font-size: 15px; }
+      }
+    </style>
+  </head>
+  <body>
+    <a href="#policy" class="skip-link">본문으로 건너뛰기</a>
+    <div class="topbar">
+      <div class="topbar-inner">
+        <a class="brand" href="https://byeolter.com/">Byeolter <span aria-hidden="true">·</span> 그만 봐</a>
+        <a class="back-link" href="https://byeolter.com/">Byeolter 홈</a>
+      </div>
+    </div>
+
+    <main id="policy">
+      <header class="hero">
+        <p class="eyebrow">StopWatching · Privacy</p>
+        <h1>개인정보 처리방침</h1>
+        <p class="lead">
+          「그만 봐」는 사용자가 정한 앱 사용 한도와 집중 시간에 맞춰 Apple Screen Time 기능으로 앱을 차단합니다.
+          앱 선택 정보와 규칙은 기기 안에서 처리하며, Byeolter 서버로 보내지 않습니다.
+        </p>
+        <span class="updated">시행일 <time datetime="2026-10-21">{updatedAt}</time></span>
+      </header>
+
+      <div class="summary" aria-label="핵심 안내">
+        <div class="summary-item"><strong>계정·광고 없음</strong><span>회원가입, 광고 SDK, 앱 분석 SDK를 사용하지 않습니다.</span></div>
+        <div class="summary-item"><strong>규칙은 기기 안에서</strong><span>선택한 앱과 일정 정보를 Apple Screen Time API로 관리합니다.</span></div>
+        <div class="summary-item"><strong>사진은 직접 선택</strong><span>차단 화면에 쓸 이미지를 기기 안에 저장합니다.</span></div>
+      </div>
+
+      <section class="policy-section">
+        <h2>1. 운영자와 적용 범위</h2>
+        <p>이 방침은 Byeolter가 제공하는 iOS 앱 「그만 봐」(영문명: StopWatching, 번들 ID: <code>com.byeolter.stopwatching</code>)에 적용됩니다.</p>
+        <p>개인정보 처리 관련 문의 창구는 <strong>Byeolter</strong>입니다. <a href="mailto:contact@byeolter.com">contact@byeolter.com</a>으로 문의해 주세요.</p>
+      </section>
+
+      <section class="policy-section">
+        <h2>2. 처리하는 정보와 목적</h2>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>정보</th><th>처리 목적과 방식</th><th>보관 및 삭제</th></tr></thead>
+            <tbody>
+              <tr>
+                <td>사용자가 Screen Time 선택기에서 고른 앱·카테고리 정보</td>
+                <td>사용 한도와 집중 시간 규칙의 대상을 지정하고 Apple의 Family Controls, Device Activity, Managed Settings API로 차단을 적용합니다. 선택 정보는 앱과 관련 확장 프로그램 사이에서 기기의 App Group으로 공유됩니다.</td>
+                <td>규칙을 삭제하거나 앱 데이터를 제거할 때 기기에서 삭제됩니다. Byeolter 서버로 전송하지 않습니다.</td>
+              </tr>
+              <tr>
+                <td>사용 한도, 집중 시간, 반복 일정 등 사용자가 만든 규칙</td>
+                <td>예약된 시간에 차단을 시작·종료하고 규칙을 표시하기 위해 기기에 저장합니다. 차단 실행은 iOS Screen Time API가 담당합니다.</td>
+                <td>앱에서 규칙을 삭제하거나 앱을 제거하면 기기에서 삭제됩니다. Byeolter는 규칙이나 상세 사용 내역을 받지 않습니다.</td>
+              </tr>
+              <tr>
+                <td>사용자가 사진 보관함에서 직접 고른 이미지</td>
+                <td>선택한 이미지를 차단 화면에 표시할 수 있도록 앱에서 정사각형 이미지로 조정한 뒤 기기 내 App Group 컨테이너에 저장합니다. 사진 전체 보관함을 서버로 업로드하지 않습니다.</td>
+                <td>앱에서 기본 이미지로 되돌리거나 앱 데이터를 제거하면 기기에서 삭제됩니다.</td>
+              </tr>
+              <tr>
+                <td>사용자가 지원 이메일로 보내는 주소와 내용</td>
+                <td>문의에 답변하고 요청을 처리하는 데 사용합니다.</td>
+                <td>문의가 처리될 때까지 보관하며, 법령상 보관 의무가 있으면 해당 기간 동안 보관합니다.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="note">앱에는 회원가입, 광고, 앱 분석 기능이 없습니다. 앱은 사용자의 상세 Screen Time 이용 기록을 수집하거나 Byeolter 서버로 전송하지 않습니다.</p>
+      </section>
+
+      <section class="policy-section">
+        <h2>3. Apple Screen Time 권한</h2>
+        <p>앱은 사용자가 권한을 허용한 경우에만 Apple Family Controls API를 사용합니다. 선택한 앱 정보와 규칙은 차단 기능을 제공하기 위해 iOS와 기기 내 앱 확장 프로그램에서 처리됩니다. 이 권한은 iOS 설정에서 관리하거나 앱 사용을 중단해 철회할 수 있습니다.</p>
+        <p>Screen Time API 및 운영체제 기능의 제공 과정에서 Apple이 처리하는 정보에는 Apple의 개인정보 처리방침과 기기 설정이 적용됩니다. Byeolter는 Apple의 내부 처리 방식이나 운영체제 백업 설정을 통제하지 않습니다.</p>
+      </section>
+
+      <section class="policy-section">
+        <h2>4. 제3자 제공과 처리 위탁</h2>
+        <p>Byeolter는 앱에서 처리하는 앱 선택 정보, 규칙, 사용자가 고른 사진을 제3자에게 제공하거나 외부 서비스에 맡기지 않습니다. 앱에는 이러한 정보를 전송하는 Byeolter 서버 연동이 없습니다.</p>
+        <p>Apple은 iOS와 Screen Time 기능 제공자로서 자체 약관 및 개인정보 처리방침에 따라 운영체제 수준의 정보를 처리할 수 있습니다. 사용자가 문의 이메일을 보내면 이메일 서비스 제공자가 메시지 전달 과정에서 해당 내용을 처리할 수 있습니다.</p>
+      </section>
+
+      <section class="policy-section">
+        <h2>5. 국외 이전 및 웹사이트 접속 정보</h2>
+        <p>Byeolter는 앱의 앱 선택 정보, 규칙, 사진을 국외 서버로 이전하지 않습니다. 다만 iOS와 Apple 서비스의 처리 및 사용자가 설정한 기기 백업의 동작은 Apple 정책과 기기 설정에 따릅니다.</p>
+        <p>이 방침 페이지를 열면 웹사이트 호스팅 또는 네트워크 제공자가 페이지 전달과 보안을 위해 IP 주소, 요청한 경로, 브라우저·기기 정보, 접속 시각 등의 접속 정보를 처리할 수 있습니다. 이 웹페이지에는 광고나 앱 분석 SDK를 포함하지 않습니다.</p>
+      </section>
+
+      <section class="policy-section">
+        <h2>6. 보관 기간, 삭제와 이용자 권리</h2>
+        <p>앱 정보는 차단 기능에 필요한 동안에만 사용자의 기기에 보관합니다. 규칙은 앱에서 삭제할 수 있고, 사용자 지정 이미지는 앱에서 기본 이미지로 되돌릴 수 있습니다. 앱을 제거하면 앱 및 공유 컨테이너에 저장된 앱 데이터가 iOS에 의해 제거됩니다.</p>
+        <p>이용자는 관련 법령에 따라 개인정보 열람, 정정, 삭제, 처리 정지 등을 요청할 수 있습니다. 다만 앱 데이터는 Byeolter가 보유하지 않으므로 기기에 저장된 규칙과 이미지는 앱에서 직접 삭제해 주세요. 문의 이메일에 포함된 개인정보에 대한 요청은 <a href="mailto:contact@byeolter.com">contact@byeolter.com</a>으로 보내 주세요.</p>
+      </section>
+
+      <section class="policy-section">
+        <h2>7. 안전성 확보와 아동의 개인정보</h2>
+        <p>앱 데이터는 iOS의 앱별 저장 공간과 앱 그룹 컨테이너에 저장되며, 운영체제의 앱 격리와 접근 제어가 적용됩니다. Byeolter는 앱의 로컬 데이터를 원격으로 열람할 수 없습니다.</p>
+        <p>앱은 만 14세 미만 아동을 대상으로 개인정보를 온라인으로 수집하지 않으며, 계정 생성이나 온라인 프로필 기능을 제공하지 않습니다.</p>
+      </section>
+
+      <section class="policy-section">
+        <h2>8. 방침 변경</h2>
+        <p>앱 기능이나 관련 법령이 바뀌면 이 방침을 수정할 수 있습니다. 변경 사항과 시행일은 이 페이지에 게시합니다. 중요한 변경은 앱 또는 App Store 페이지를 통해 안내하겠습니다.</p>
+      </section>
+
+      <section class="policy-section contact" aria-labelledby="contact-heading">
+        <div>
+          <h2 id="contact-heading">개인정보 문의</h2>
+          <p>개인정보 관련 요청이나 문의를 보내 주세요.</p>
+        </div>
+        <a href="mailto:contact@byeolter.com">contact@byeolter.com</a>
+      </section>
+    </main>
+
+    <footer>
+      <span>© 2026 Byeolter · 그만 봐</span>
+      <a href="https://byeolter.com/">byeolter.com</a>
+    </footer>
+  </body>
+</html>
