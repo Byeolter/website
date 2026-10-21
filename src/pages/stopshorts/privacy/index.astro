@@ -1,6 +1,6 @@
 ---
-const title = '개인정보 처리방침 | 쇼츠 그만';
-const updatedAt = '2026년 10월 13일';
+const title = '개인정보 처리방침 | 쇼츠 그만, 댓글 그만';
+const updatedAt = '2026년 10월 21일';
 ---
 <!doctype html>
 <html lang="ko">
@@ -9,7 +9,7 @@ const updatedAt = '2026년 10월 13일';
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="쇼츠 그만 앱의 개인정보 처리방침입니다. 접근성 서비스와 Google AdMob 광고 SDK의 데이터 처리를 안내합니다."
+      content="쇼츠 그만, 댓글 그만 앱의 개인정보 처리방침입니다. 접근성 서비스와 Google AdMob 광고 SDK의 데이터 처리를 안내합니다."
     />
     <link rel="canonical" href="https://stopshorts.byeolter.com/privacy" />
     <meta name="theme-color" content="#111111" />
@@ -31,7 +31,7 @@ const updatedAt = '2026년 10월 13일';
       .topbar-inner, main, footer { width: min(860px, calc(100% - 40px)); margin: 0 auto; }
       .topbar-inner { min-height: 72px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
       .brand { display: inline-flex; align-items: center; gap: 10px; color: #fff; font-weight: 750; text-decoration: none; letter-spacing: -.03em; }
-      .brand-mark { display: grid; width: 34px; height: 24px; place-items: center; border-radius: 7px; background: #f00; color: white; font-size: 15px; line-height: 1; }
+      .brand-icon { display: block; width: 34px; height: 34px; flex: none; border-radius: 8px; object-fit: cover; }
       .back-link { color: #c7c7c7; font-size: 14px; text-decoration: none; }
       main { padding: 64px 0 84px; }
       .hero { margin-bottom: 34px; }
@@ -73,8 +73,8 @@ const updatedAt = '2026년 10월 13일';
     <div class="topbar">
       <div class="topbar-inner">
         <a class="brand" href="https://byeolter.com/" aria-label="Byeolter 홈">
-          <span class="brand-mark" aria-hidden="true">▶</span>
-          <span>쇼츠 그만</span>
+          <img class="brand-icon" src="/assets/stopshorts-app-icon.png" alt="" width="34" height="34" />
+          <span>쇼츠 그만, 댓글 그만</span>
         </a>
         <a class="back-link" href="https://byeolter.com/">Byeolter</a>
       </div>
@@ -82,13 +82,13 @@ const updatedAt = '2026년 10월 13일';
 
     <main id="policy">
       <header class="hero">
-        <p class="eyebrow">Stop Shorts · Privacy</p>
+        <p class="eyebrow">Stop Shorts, Stop Comments · Privacy</p>
         <h1>개인정보 처리방침</h1>
         <p class="lead">
-          쇼츠 그만은 YouTube의 쇼츠와 댓글 화면을 제어하는 Android 앱입니다.
+          쇼츠 그만, 댓글 그만은 지원 대상 동영상 앱의 짧은 영상과 댓글 화면을 제어하는 Android 앱입니다.
           앱 설정과 차단 기록은 기기에 저장하며, 광고는 Google AdMob SDK를 통해 제공합니다.
         </p>
-        <span class="updated">시행일 <time datetime="2026-10-13">{updatedAt}</time></span>
+        <span class="updated">시행일 <time datetime="2026-10-21">{updatedAt}</time></span>
       </header>
 
       <div class="summary" aria-label="핵심 안내">
@@ -99,7 +99,7 @@ const updatedAt = '2026년 10월 13일';
 
       <section class="policy-section">
         <h2>1. 운영자와 적용 범위</h2>
-        <p>이 방침은 Byeolter가 제공하는 Android 앱 「쇼츠 그만」(Google Play 표시명: 「쇼츠 그만, 댓글 그만 - 유튜브 사용량 제어 어플」, 패키지명: <code>com.byeolter.stopshorts</code>)의 개인정보 처리에 적용됩니다.</p>
+        <p>이 방침은 Byeolter가 제공하는 Android 앱 「쇼츠 그만, 댓글 그만」(패키지명: <code>com.byeolter.stopshorts</code>)의 개인정보 처리에 적용됩니다.</p>
         <p>개인정보처리자 및 문의 창구는 <strong>Byeolter</strong>입니다. 개인정보 보호 관련 문의는 <a href="mailto:contact@byeolter.com">contact@byeolter.com</a>으로 보내 주세요.</p>
       </section>
 
@@ -115,8 +115,8 @@ const updatedAt = '2026년 10월 13일';
                 <td>앱 데이터 삭제 또는 앱 제거 시 삭제됩니다. 일일 횟수는 날짜가 바뀌면 화면에서 0으로 표시되고 다음 기록 시 이전 값이 갱신됩니다.</td>
               </tr>
               <tr>
-                <td>YouTube 접근성 화면 정보</td>
-                <td>YouTube가 접근성 서비스에 제공하는 화면 텍스트, UI 요소 ID, 버튼 상태, 화면 위치 및 접근성 이벤트를 기기에서 일시적으로 확인해 쇼츠·댓글 화면을 식별하고 닫습니다. 이 목적 외로 사용하지 않으며 앱 운영자에게 전송하지 않습니다.</td>
+                <td>지원 대상 앱의 접근성 화면 정보</td>
+                <td>접근성 서비스가 지원 대상 앱에서 제공하는 화면 텍스트, UI 요소 ID, 버튼 상태, 화면 위치 및 접근성 이벤트를 기기에서 일시적으로 확인해 짧은 영상·댓글 화면을 식별하고 선택한 차단 기능을 실행합니다. 이 목적 외로 사용하지 않으며 앱 운영자에게 전송하지 않습니다.</td>
                 <td>차단 판단에 필요한 동안만 메모리에서 처리하고 앱 설정으로 저장하지 않습니다. 디버그 빌드에서는 문제 진단용 화면 요소 정보가 기기의 Android 로그에 기록될 수 있습니다. 일반 공개 릴리스 빌드에는 실험실과 이 진단 로그가 포함되지 않습니다.</td>
               </tr>
               <tr>
@@ -132,13 +132,13 @@ const updatedAt = '2026년 10월 13일';
             </tbody>
           </table>
         </div>
-        <p class="note">앱에는 회원가입 기능이나 사용자 계정이 없습니다. Byeolter는 YouTube 계정, 비밀번호, 시청 기록을 서버로 수집하지 않습니다. 접근성 서비스는 사용자가 Android 설정에서 직접 켜고 끌 수 있습니다.</p>
+        <p class="note">앱에는 회원가입 기능이나 사용자 계정이 없습니다. Byeolter 자체 서버는 외부 서비스의 계정 정보, 비밀번호, 이용 기록을 수집하지 않습니다. 접근성 서비스는 사용자가 Android 설정에서 직접 켜고 끌 수 있습니다.</p>
       </section>
 
       <section class="policy-section">
         <h2>3. 접근성 서비스 사용</h2>
-        <p>쇼츠·댓글 차단을 켜고 Android 접근성 설정에서 서비스를 허용하면, 서비스는 YouTube가 현재 화면에 제공하는 접근성 정보를 기기 안에서 확인합니다. 이 정보를 사용해 쇼츠 화면을 닫거나 댓글 패널을 내립니다. 앱이 YouTube 화면 정보를 자체 서버로 전송하거나 사용자 식별 목적으로 저장하지 않습니다.</p>
-        <p>YouTube가 아닌 앱에서는 화면 내용을 읽지 않고 앱 전환을 감지해 차단용 화면 표시를 정리합니다. 차단 기능을 중지하려면 앱의 토글을 끄거나 Android 접근성 설정에서 서비스를 해제하면 됩니다.</p>
+        <p>짧은 영상·댓글 차단을 켜고 Android 접근성 설정에서 서비스를 허용하면, 서비스는 지원 대상 앱이 현재 화면에 제공하는 접근성 정보를 기기 안에서 확인합니다. 이 정보를 사용해 선택한 화면을 닫거나 가립니다. 접근성 화면 정보는 앱 자체 서버로 전송하거나 사용자 식별 목적으로 저장하지 않습니다.</p>
+        <p>지원 대상이 아닌 앱에서는 화면 내용을 읽지 않고 앱 전환을 감지해 차단용 화면 표시를 정리합니다. 차단 기능을 중지하려면 앱의 토글을 끄거나 Android 접근성 설정에서 서비스를 해제하면 됩니다.</p>
       </section>
 
       <section class="policy-section">
@@ -187,7 +187,7 @@ const updatedAt = '2026년 10월 13일';
     </main>
 
     <footer>
-      <span>© 2026 Byeolter · 쇼츠 그만</span>
+      <span>© 2026 Byeolter · 쇼츠 그만, 댓글 그만</span>
       <a href="https://byeolter.com/">byeolter.com</a>
     </footer>
   </body>
