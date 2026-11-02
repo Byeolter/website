@@ -30,13 +30,17 @@
       void main(){
         vec2 p=vec2(vUv.x,1.-vUv.y);
         // Only warp the small original specular highlights, keeping eye edges still.
-        vec2 glintA=mix(vec2(.396,.273),vec2(.401,.278),uHelmetMix);
-        vec2 glintB=mix(vec2(.596,.312),vec2(.599,.315),uHelmetMix);
-        float glints=max(area(p,glintA,vec2(.023,.019)),area(p,glintB,vec2(.023,.019)));
-        p-=vec2(uLook.x*.0045,uLook.y*.003)*glints;
+        vec2 glintA=vec2(.396,.273);
+        vec2 glintB=vec2(.596,.312);
+        float glints=max(area(p,glintA,vec2(.026,.023)),area(p,glintB,vec2(.026,.023)));
+        p-=vec2(uLook.x*.009,uLook.y*.006)*glints;
         float press=area(p,uButton,vec2(.09,.09))*uPress;
         p=uButton+(p-uButton)*(1.+.07*press);
-        gl_FragColor=mix(texture2D(uImage,vec2(p.x,1.-p.y)),texture2D(uHelmet,vec2(p.x,1.-p.y)),uHelmetMix);
+        // Change only the cap above its diagonal brim. Face and body always
+        // come from the original texture, so their size never changes.
+        float brim=.15+.21*vUv.x + .08*smoothstep(.65,.79,vUv.x) + .045*(1.-smoothstep(.23,.34,vUv.x));
+        float cap=1.-smoothstep(brim-.004,brim+.004,1.-vUv.y);
+        gl_FragColor=mix(texture2D(uImage,vec2(p.x,1.-p.y)),texture2D(uHelmet,vUv),uHelmetMix*cap);
       }`;
     function shader(type, source) {
       const item = gl.createShader(type);
@@ -102,8 +106,8 @@
   hero.addEventListener('pointermove',event=>{
     if(event.pointerType==='touch'||reduced)return;
     const bounds=art.getBoundingClientRect();
-    targetX=clamp((event.clientX-bounds.left-bounds.width/2)/(bounds.width*.8),-1,1);
-    targetY=clamp((event.clientY-bounds.top-bounds.height*.3)/(bounds.height*.7),-1,1);
+    targetX=clamp((event.clientX-bounds.left-bounds.width/2)/(bounds.width*.5),-1,1);
+    targetY=clamp((event.clientY-bounds.top-bounds.height*.3)/(bounds.height*.5),-1,1);
     lastMove=performance.now();
     if(fine){pointerX=event.clientX;pointerY=event.clientY;if(!pointerActive){ringX=pointerX;ringY=pointerY;}pointerActive=true;hero.classList.add('pointer-in');dot.style.left=`${pointerX}px`;dot.style.top=`${pointerY}px`;}
     wake();
