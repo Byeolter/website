@@ -16,8 +16,7 @@
   let pointerX = 0, pointerY = 0, ringX = 0, ringY = 0;
   let pointerActive = false, inView = true, frame = 0, renderer = null, pressedAt = -1000;
 
-  // Warp the original image's pixels: Gemma keeps her own eyes and highlights.
-  // No replacement eyeballs, extra pupils, or painted facial layers are added.
+  // Keep the original eye texture fixed; translate only its white reflections.
   function createRenderer() {
     const gl = canvas.getContext('webgl', { alpha: true, premultipliedAlpha: false, antialias: false });
     if (!gl) return null;
@@ -27,20 +26,35 @@
       varying vec2 vUv; uniform sampler2D uImage; uniform sampler2D uHelmet; uniform float uHelmetMix; uniform vec2 uLook;
       uniform vec2 uButton; uniform float uPress;
       float area(vec2 p,vec2 center,vec2 radius){return 1.-smoothstep(.55,1.,length((p-center)/radius));}
+      vec4 original(vec2 p){return texture2D(uImage,vec2(p.x,1.-p.y));}
+      float highlight(vec2 p,vec2 center){
+        vec3 c=original(p).rgb;
+        return area(p,center,vec2(.014,.013))*smoothstep(.20,.65,min(c.r,min(c.g,c.b)));
+      }
+      vec4 moveHighlight(vec4 color,vec2 p,vec2 center,vec2 shift){
+        // Leave the eye texture and silhouette at their original coordinates.
+        // Replace only the white reflection, then composite its translated pixels.
+        float oldMask=highlight(p,center);
+        vec3 dark=original(vec2(p.x,center.y+.023)).rgb;
+        color.rgb=mix(color.rgb,dark,oldMask);
+        vec2 source=p-shift;
+        float newMask=highlight(source,center);
+        color.rgb=mix(color.rgb,original(source).rgb,newMask);
+        return color;
+      }
       void main(){
         vec2 p=vec2(vUv.x,1.-vUv.y);
-        // Only warp the small original specular highlights, keeping eye edges still.
-        vec2 glintA=vec2(.396,.273);
-        vec2 glintB=vec2(.596,.312);
-        float glints=max(area(p,glintA,vec2(.026,.023)),area(p,glintB,vec2(.026,.023)));
-        p-=vec2(uLook.x*.009,uLook.y*.006)*glints;
         float press=area(p,uButton,vec2(.09,.09))*uPress;
         p=uButton+(p-uButton)*(1.+.07*press);
         // Change only the cap above its diagonal brim. Face and body always
         // come from the original texture, so their size never changes.
         float brim=.15+.21*vUv.x + .08*smoothstep(.65,.79,vUv.x) + .045*(1.-smoothstep(.23,.34,vUv.x));
         float cap=1.-smoothstep(brim-.004,brim+.004,1.-vUv.y);
-        gl_FragColor=mix(texture2D(uImage,vec2(p.x,1.-p.y)),texture2D(uHelmet,vUv),uHelmetMix*cap);
+        vec4 face=original(p);
+        vec2 shift=vec2(uLook.x*.009,uLook.y*.006);
+        face=moveHighlight(face,p,vec2(.396,.273),shift);
+        face=moveHighlight(face,p,vec2(.596,.312),shift);
+        gl_FragColor=mix(face,texture2D(uHelmet,vUv),uHelmetMix*cap);
       }`;
     function shader(type, source) {
       const item = gl.createShader(type);
