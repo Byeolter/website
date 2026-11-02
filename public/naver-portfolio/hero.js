@@ -3,6 +3,8 @@
   if (!hero) return;
   const art = hero.querySelector('.gemma-art');
   const picture = art.querySelector('.gemma-character');
+  const helmetPicture = art.querySelector('.gemma-helmet-character');
+  let helmetMix = 0, lastFrame = 0;
   const canvas = art.querySelector('.gemma-motion');
   const button = art.querySelector('.push-me');
   const ring = hero.querySelector('.cursor-orbit');
@@ -22,19 +24,19 @@
     const vertex = `attribute vec2 aPosition; varying vec2 vUv;
       void main(){vUv=(aPosition+1.0)*0.5;gl_Position=vec4(aPosition,0.,1.);}`;
     const fragment = `precision mediump float;
-      varying vec2 vUv; uniform sampler2D uImage; uniform vec2 uLook;
-      uniform vec4 uEyes; uniform vec4 uHead; uniform vec2 uButton; uniform float uPress;
+      varying vec2 vUv; uniform sampler2D uImage; uniform sampler2D uHelmet; uniform float uHelmetMix; uniform vec2 uLook;
+      uniform vec2 uButton; uniform float uPress;
       float area(vec2 p,vec2 center,vec2 radius){return 1.-smoothstep(.55,1.,length((p-center)/radius));}
       void main(){
         vec2 p=vec2(vUv.x,1.-vUv.y);
-        float head=area(p,uHead.xy,uHead.zw);
-        p-=vec2(uLook.x*.013,uLook.y*.007)*head;
-        p.x+=(p.x-uHead.x)*abs(uLook.x)*.025*head;
-        float eyes=max(area(p,uEyes.xy,vec2(.068,.065)),area(p,uEyes.zw,vec2(.068,.065)));
-        p-=vec2(uLook.x*.007,uLook.y*.004)*eyes;
+        // Only warp the small original specular highlights, keeping eye edges still.
+        vec2 glintA=mix(vec2(.396,.273),vec2(.401,.278),uHelmetMix);
+        vec2 glintB=mix(vec2(.596,.312),vec2(.599,.315),uHelmetMix);
+        float glints=max(area(p,glintA,vec2(.023,.019)),area(p,glintB,vec2(.023,.019)));
+        p-=vec2(uLook.x*.0045,uLook.y*.003)*glints;
         float press=area(p,uButton,vec2(.09,.09))*uPress;
         p=uButton+(p-uButton)*(1.+.07*press);
-        gl_FragColor=texture2D(uImage,vec2(p.x,1.-p.y));
+        gl_FragColor=mix(texture2D(uImage,vec2(p.x,1.-p.y)),texture2D(uHelmet,vec2(p.x,1.-p.y)),uHelmetMix);
       }`;
     function shader(type, source) {
       const item = gl.createShader(type);
@@ -51,33 +53,39 @@
     gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,-1,1,1,-1,1,1]),gl.STATIC_DRAW);
     const location=gl.getAttribLocation(program,'aPosition');
     gl.enableVertexAttribArray(location);gl.vertexAttribPointer(location,2,gl.FLOAT,false,0,0);
-    const texture = gl.createTexture(); gl.bindTexture(gl.TEXTURE_2D,texture);
-    gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL,true);
-    gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE);
-    gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE);
-    gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.LINEAR);
-    gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MAG_FILTER,gl.LINEAR);
-    gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,picture);
+    [picture,helmetPicture].forEach((source,index)=>{
+      gl.activeTexture(gl.TEXTURE0+index);
+      const texture=gl.createTexture();gl.bindTexture(gl.TEXTURE_2D,texture);
+      gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL,true);
+      gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE);
+      gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE);
+      gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.LINEAR);
+      gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MAG_FILTER,gl.LINEAR);
+      gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,source);
+      gl.uniform1i(gl.getUniformLocation(program,index?'uHelmet':'uImage'),index);
+    });
     canvas.width=Math.min(picture.naturalWidth,1200);
     canvas.height=Math.round(canvas.width*picture.naturalHeight/picture.naturalWidth);
     gl.viewport(0,0,canvas.width,canvas.height);
-    gl.uniform4f(gl.getUniformLocation(program,'uEyes'),.391,.295,.592,.335);
-    gl.uniform4f(gl.getUniformLocation(program,'uHead'),.50,.28,.47,.32);
     gl.uniform2f(gl.getUniformLocation(program,'uButton'),.443,.652);
     const gaze=gl.getUniformLocation(program,'uLook');
     const pulse=gl.getUniformLocation(program,'uPress');
-    return (x,y,press)=>{gl.uniform2f(gaze,x,y);gl.uniform1f(pulse,press);gl.drawArrays(gl.TRIANGLES,0,6);};
+    const helmet=gl.getUniformLocation(program,'uHelmetMix');
+    return (x,y,press)=>{gl.uniform1f(helmet,helmetMix);gl.uniform2f(gaze,x,y);gl.uniform1f(pulse,press);gl.drawArrays(gl.TRIANGLES,0,6);};
   }
   function tick(now) {
     frame=0;
     if (!inView || document.hidden) return;
     if (!reduced && renderer) {
       if(now-lastMove>3500){targetX=Math.sin(now*.00065)*.24;targetY=0;}
-      lookX+=(targetX-lookX)*.14;lookY+=(targetY-lookY)*.14;
+      const dt=Math.min(now-(lastFrame||now-16),50);lastFrame=now;
+      const ease=1-Math.exp(-dt/150);
+      lookX+=(targetX-lookX)*ease;lookY+=(targetY-lookY)*ease;
+      const destination=hero.classList.contains('helmet-on')?1:0;
+      helmetMix+=(destination-helmetMix)*(1-Math.exp(-dt/65));
+      if(Math.abs(destination-helmetMix)<.001)helmetMix=destination;
       const age=(now-pressedAt)/320;
       renderer(lookX,lookY,age>=0&&age<1?Math.sin(age*Math.PI):0);
-      art.style.setProperty('--face-x',`${lookX*art.clientWidth*.013}px`);
-      art.style.setProperty('--face-y',`${lookY*art.clientHeight*.007}px`);
     }
     if(pointerActive){ringX+=(pointerX-ringX)*.55;ringY+=(pointerY-ringY)*.55;ring.style.left=`${ringX}px`;ring.style.top=`${ringY}px`;}
     if(renderer||pointerActive)frame=requestAnimationFrame(tick);
@@ -85,10 +93,11 @@
   function wake(){if(!frame&&inView&&!document.hidden)frame=requestAnimationFrame(tick);}
   function loadCharacter(){
     art.style.aspectRatio=`${picture.naturalWidth} / ${picture.naturalHeight}`;
-    if(reduced) return;
+    if(reduced || !picture.naturalWidth || !helmetPicture.naturalWidth) return;
     try{renderer=createRenderer();if(renderer){renderer(0,0,0);art.classList.add('motion-ready');wake();}}catch{renderer=null;}
   }
   if(picture.complete&&picture.naturalWidth)loadCharacter();else picture.addEventListener('load',loadCharacter,{once:true});
+  if(!helmetPicture.complete)helmetPicture.addEventListener('load',loadCharacter,{once:true});
   canvas.addEventListener('webglcontextlost',()=>{renderer=null;art.classList.remove('motion-ready');});
   hero.addEventListener('pointermove',event=>{
     if(event.pointerType==='touch'||reduced)return;
