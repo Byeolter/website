@@ -3700,7 +3700,9 @@ async function showHome(app             , platform                 , t          
     const sheet = new Container();
     sheet.position.set(12, SHEET_TOP);
     const w = WORLD_W - 24;
-    const h = WORLD_H - SHEET_TOP + 40;
+    // 시트는 안의 내용에 맞춰 끝나요. 메모가 있으면 그만큼 길어져요.
+    const noteH = note && slot.id ? Math.ceil(Math.max(1, note.length / 20)) * 20 + 8 : 0;
+    const h = (slot.id ? 214 + noteH + 50 + 18 : WORLD_H - SHEET_TOP - 16);
     const bg = new Graphics();
     if (st === 'perfect') goldFrame(bg, 0, 0, w, h, 26);
     else bg.roundRect(3, 5, w, h, 26).fill({ color: INK, alpha: 0.22 }).roundRect(0, 0, w, h, 26).fill({ color: PAPER }).stroke({ width: 3, color: INK });
@@ -3724,8 +3726,8 @@ async function showHome(app             , platform                 , t          
 
     // 실패·성공·완벽 그림. 아직 못 본 결과는 검은 실루엣이에요. 글자 칩 없이 그림과 횟수만 보여줘요.
     const order            = ['fail', 'success', 'perfect'];
-    const sw = 100;
-    const sg = (w - 36 - sw * 3) / 2;
+    const sg = 10;
+    const sw = (w - 36 - sg * 2) / 3;
     order.forEach((o, i) => {
       const x = 18 + i * (sw + sg);
       const count = rec ? rec[o] : 0;
@@ -3735,7 +3737,7 @@ async function showHome(app             , platform                 , t          
       sheet.addChild(frame);
       // 아직 못 본 결과는 실루엣 대신 물음표로 숨겨요. (타일의 실루엣은 그대로예요.)
       if (slot.id && count > 0) {
-        const pic = picture(slot.id, o, 78, false);
+        const pic = picture(slot.id, o, 84, false);
         pic.position.set(x + sw / 2, 114);
         sheet.addChild(pic);
       } else {
@@ -3753,19 +3755,19 @@ async function showHome(app             , platform                 , t          
     if (note) {
       const nt = label(note, 14, MUTED, { wordWrap: true, wordWrapWidth: w - 36, align: 'center' });
       nt.anchor.set(0.5, 0);
-      nt.position.set(w / 2, 206);
+      nt.position.set(w / 2, 204);
       sheet.addChild(nt);
     }
 
     let btn           ;
     const bw = w - 36;
-    if (slot.playable) btn = makeButton('만들기 시작', bw, 54, BUTTER, () => onPlay('mochi'));
-    else if (slot.id && !isOpen(slot)) btn = makeButton('광고 보고 열기', bw, 54, BUTTER, () => void runAd());
+    if (slot.playable) btn = makeButton('만들기 시작', bw, 50, BUTTER, () => onPlay('mochi'));
+    else if (slot.id && !isOpen(slot)) btn = makeButton('광고 보고 열기', bw, 50, BUTTER, () => void runAd());
     else {
-      btn = makeButton(slot.id ? '준비 중이에요' : '아직 비밀이에요', bw, 54, CREAM, () => {});
+      btn = makeButton(slot.id ? '준비 중이에요' : '아직 비밀이에요', bw, 50, CREAM, () => {});
       btn.alpha = 0.7;
     }
-    btn.position.set(18, 236);
+    btn.position.set(18, 214 + noteH);
     sheet.addChild(btn);
     content.addChild(sheet);
   }
