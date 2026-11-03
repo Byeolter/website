@@ -3421,7 +3421,7 @@ async function showHome(app             , platform                 , t          
 
     // 머리글
     const title = label('나의 도감', 26, INK, { stroke: { color: 0xffffff, width: 5 } });
-    title.position.set(GRID_X, 22);
+    title.position.set(GRID_X, 14);
     const released = SLOTS.filter((s) => s.playable);
     const done = released.filter((s) => s.id && stateOf(data[s.id]) !== 'untouched').length;
     const chip = new Container();
@@ -3430,7 +3430,7 @@ async function showHome(app             , platform                 , t          
     const cw = chipText.width + 26;
     chip.addChild(card(cw, 30, 15, PAPER), chipText);
     chipText.position.set(cw / 2, 15);
-    chip.position.set(WORLD_W - GRID_X - cw, 28);
+    chip.position.set(WORLD_W - GRID_X - cw, 20);
     content.addChild(title, chip);
 
     // 소리 켜기/끄기: 수집 칩과 같은 높이의 알약 버튼
@@ -3453,7 +3453,7 @@ async function showHome(app             , platform                 , t          
     drawSnd();
     sIcon.position.set(SND_W / 2 - 1, 15);
     snd.addChild(card(SND_W, 30, 15, PAPER), sIcon);
-    snd.position.set(chip.x - 8 - SND_W, 28);
+    snd.position.set(chip.x - 10 - SND_W, 20);
     snd.hitArea = { contains: (x        , y        ) => x > -6 && x < SND_W + 6 && y > -6 && y < 36 };
     snd.eventMode = 'static';
     snd.cursor = 'pointer';
@@ -3496,7 +3496,7 @@ async function showHome(app             , platform                 , t          
       });
       tabBar.addChild(seg);
     });
-    tabBar.position.set(GRID_X, 70);
+    tabBar.position.set(GRID_X, 72);
     content.addChild(tabBar);
     countText = null;
     if (tab === 'rank') {
@@ -3822,20 +3822,20 @@ async function showHome(app             , platform                 , t          
   function buildDebug()       {
     const mk = (text        , x        , fn                     )       => {
       const l = label(text, 11, MUTED);
-      l.anchor.set(1, 0);
-      l.position.set(x, 62);
+      l.anchor.set(0, 0);
+      l.position.set(x, 48);
       l.eventMode = 'static';
       l.cursor = 'pointer';
-      l.hitArea = { contains: (px        , py        ) => px > -l.width - 6 && px < 6 && py > -8 && py < 22 };
+      l.hitArea = { contains: (px        , py        ) => px > -6 && px < l.width + 6 && py > -6 && py < 20 };
       l.on('pointertap', () => void fn());
       content.addChild(l);
     };
-    mk('예시 채우기', WORLD_W - 100, async () => {
+    mk('예시 채우기', GRID_X, async () => {
       data = { mochi: { fail: 2, success: 5, perfect: 1, best: 1240 }, dalgona: { fail: 1, success: 2, perfect: 0, best: 700 } };
       await platform.storage.set(COLLECTION_KEY, serializeCollection(data));
       if (!disposed) build();
     });
-    mk('초기화 (테스트)', WORLD_W - 18, async () => {
+    mk('초기화 (테스트)', GRID_X + 74, async () => {
       data = {};
       unlocked = false;
       note = '';
