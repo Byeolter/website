@@ -306,6 +306,102 @@ function rand()         {
   return source ? source() : Math.random();
 }
 
+// spike/src/core/nickname.ts
+// 닉네임(= 랭킹에 보이는 이름): 길이·글자·기본 욕설을 검사하고, 랜덤 이름과 2주에 한 번 바꾸기 규칙을 맡아요.
+// 화면과 서버를 몰라요. 저장소(문자열)만 받아요.
+
+const NICK_MAX = 8;
+const NICK_KEY = 'nick.v1';
+const NICK_COOLDOWN_DAYS = 14;
+const DAY_MS = 24 * 60 * 60 * 1000;
+
+                                                                   
+                                                                                        
+
+/** 공백은 하나로 줄이고 앞뒤를 잘라요. */
+function cleanNick(s        )         {
+  return s.replace(/[\u0000-\u001f\u007f]/g, ' ').replace(/\s+/g, ' ').trim();
+}
+
+// 기본 욕설 목록이에요. 긴 말은 어디에 들어 있어도 막고, 짧은 말은 이름 전체가 그 말일 때만 막아요. (정상적인 이름이 막히지 않게)
+const BANNED_ANYWHERE = ['씨발', '시발', '씨바', '씨팔', '시팔', '병신', '개새끼', '개세끼', '미친놈', '미친년', '지랄', '좆', '존나', '쓰레기', '창녀', '느금', '니애미', '니미', '엿먹', '꺼져', '섹스', '야동', 'fuck', 'shit', 'bitch', 'cunt', 'nigger', 'nigga', 'asshole'];
+const BANNED_EXACT = ['ㅅㅂ', 'ㅆㅂ', 'ㅂㅅ', 'ㅈㄹ', 'ㅈㄴ', '보지', '자지', '썅', '년', '놈', '새끼', 'sex', 'dick', 'ass'];
+
+/** 띄어쓰기·숫자·기호로 피해 가는 걸 막으려고 한글/영문만 남겨서 비교해요. */
+function squash(s        )         {
+  return s.toLowerCase().replace(/[^a-z가-힣ㄱ-ㅎㅏ-ㅣ]/g, '');
+}
+
+function isBanned(name        )          {
+  const k = squash(name);
+  if (!k) return false;
+  if (BANNED_EXACT.includes(k)) return true;
+  return BANNED_ANYWHERE.some((w) => k.includes(w));
+}
+
+function validateNick(input        )            {
+  const name = cleanNick(input);
+  if (name.length === 0) return { ok: false, reason: 'empty' };
+  if (Array.from(name).length > NICK_MAX) return { ok: false, reason: 'tooLong' };
+  if (!/^[가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z0-9 ]+$/.test(name)) return { ok: false, reason: 'chars' };
+  if (isBanned(name)) return { ok: false, reason: 'banned' };
+  return { ok: true, name };
+}
+
+const NICK_MESSAGES                              = {
+  empty: '이름을 적어줘요',
+  tooLong: `이름은 ${NICK_MAX}자까지 쓸 수 있어요`,
+  chars: '한글·영문·숫자만 쓸 수 있어요',
+  banned: '쓸 수 없는 말이 들어 있어요',
+};
+
+// ---------- 랜덤 이름 ----------
+const ADJECTIVES = ['쫄깃한', '말랑한', '달콤한', '바삭한', '따끈한', '폭신한', '고소한', '새콤한', '쌉싸름', '촉촉한', '든든한', '반짝이는'];
+const NOUNS = ['모찌', '찹쌀떡', '탕후루', '달고나', '쿠키', '연구원', '반죽장인', '팥빙수', '마카롱', '호떡', '꿀떡', '붕어빵'];
+
+/** 꾸미는 말 + 이름을 뽑아요. 8자를 넘는 조합은 다시 뽑아요. rand는 0 이상 1 미만을 돌려주는 함수예요. */
+function randomNick(rand               = Math.random)         {
+  for (let i = 0; i < 30; i++) {
+    const a = ADJECTIVES[Math.floor(rand() * ADJECTIVES.length) % ADJECTIVES.length];
+    const n = NOUNS[Math.floor(rand() * NOUNS.length) % NOUNS.length];
+    const name = `${a} ${n}`;
+    if (Array.from(name).length <= NICK_MAX && validateNick(name).ok) return name;
+  }
+  return '말랑한 모찌';
+}
+
+// ---------- 저장과 바꾸기 규칙 ----------
+                            
+               
+                                                                  
+                           
+ 
+
+function parseNick(raw               )                   {
+  if (!raw) return null;
+  try {
+    const o = JSON.parse(raw)                             ;
+    if (!o || typeof o.name !== 'string') return null;
+    const v = validateNick(o.name);
+    if (!v.ok) return null;
+    const at = typeof o.changedAt === 'number' && Number.isFinite(o.changedAt) ? o.changedAt : null;
+    return { name: v.name, changedAt: at };
+  } catch {
+    return null;
+  }
+}
+
+function serializeNick(s           )         {
+  return JSON.stringify(s);
+}
+
+/** 이름을 바꿀 수 있는지 봐요. 못 바꾸면 남은 날짜(올림)를 돌려줘요. */
+function changeStatus(state                  , now        )                                                 {
+  if (!state || state.changedAt === null) return { ok: true };
+  const left = state.changedAt + NICK_COOLDOWN_DAYS * DAY_MS - now;
+  return left <= 0 ? { ok: true } : { ok: false, daysLeft: Math.ceil(left / DAY_MS) };
+}
+
 // spike/src/core/daily.ts
 // 오늘의 음식: 하루에 한 음식을 모두 같은 조건으로 겨뤄요. 하루 3번 도전하고, 그날 최고점이 순위에 올라가요.
 
@@ -422,7 +518,7 @@ function parseBoard(raw         )                   {
 
                                                                                                                                                              
 
-function createSupabaseBoardRepo(cfg                , playerKey        , name        , fetchFn        = (i, init) => fetch(i, init))            {
+function createSupabaseBoardRepo(cfg                , playerKey        , name                         , fetchFn        = (i, init) => fetch(i, init))            {
   async function rpc(fn        , body                         )                   {
     const res = await fetchFn(`${cfg.url}/rest/v1/rpc/${fn}`, { method: 'POST', headers: { apikey: cfg.key, 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
     if (!res.ok) throw new Error(`supabase ${fn} failed`);
@@ -430,7 +526,7 @@ function createSupabaseBoardRepo(cfg                , playerKey        , name   
   }
   return {
     async submit(board, score) {
-      await rpc('dogam_submit_score', { p_player_key: playerKey, p_name: name, p_board: board, p_score: Math.floor(score) });
+      await rpc('dogam_submit_score', { p_player_key: playerKey, p_name: typeof name === 'function' ? name() : name, p_board: board, p_score: Math.floor(score) });
     },
     async load(board) {
       const v = parseBoard(await rpc('dogam_board', { p_player_key: playerKey, p_board: board, p_limit: 20 }));
@@ -441,7 +537,7 @@ function createSupabaseBoardRepo(cfg                , playerKey        , name   
 }
 
 /** 서버가 안 될 때를 위한 기기 안 임시 랭킹. 가짜 참가자(sample)와 내 점수로 순위를 만들어요. */
-function createLocalBoardRepo(storage                                                                                      , name        , sample                                   )            {
+function createLocalBoardRepo(storage                                                                                      , name                         , sample                                   )            {
   const KEY = 'board.local.v1';
   async function read()                                  {
     try {
@@ -459,7 +555,7 @@ function createLocalBoardRepo(storage                                           
     async load(board) {
       const mine = (await read())[board];
       const list = sample.map((s) => ({ name: s.name, score: s.score, mine: false }));
-      if (mine !== undefined) list.push({ name, score: mine, mine: true });
+      if (mine !== undefined) list.push({ name: typeof name === 'function' ? name() : name, score: mine, mine: true });
       list.sort((a, b) => b.score - a.score);
       const ranked = list.map((r, i) => ({ ...r, rank: i + 1 }));
       const me = ranked.find((r) => r.mine);
@@ -3072,6 +3168,221 @@ async function showRequests(
   };
 }
 
+// spike/src/nickScene.ts
+
+                                                        
+                                           
+
+
+
+// 이름 정하기 화면(연구원증). 처음 정할 때와 바꿀 때 같이 써요. 글자 입력은 화면 위에 겹친 HTML 입력창이에요.
+
+                              
+                         
+                                           
+                  
+                    
+                                   
+                      
+ 
+/** custom: 직접 정한 이름이면 true, 건너뛰어서 자동으로 붙은 이름이면 false. null이면 바꾸지 않고 나갔어요. */
+                                                                  
+
+function cardNumber(key        )         {
+  let h = 0;
+  for (const ch of key) h = (h * 31 + ch.charCodeAt(0)) % 9000;
+  return String(h + 1000);
+}
+
+async function showNickname(app             , platform                 , t          , opts             , onDone                         )                      {
+  const locked = opts.mode === 'edit' && (opts.lockedDays ?? 0) > 0;
+  let name = opts.current;
+  let disposed = false;
+  let input                          = null;
+  let dom                                                        = null;
+
+  const root = new Container();
+  app.stage.addChild(root);
+  const backdrop = createBackdrop(app);
+  root.addChild(backdrop.node);
+  const world = new Container();
+  root.addChild(world);
+  const content = new Container();
+  world.addChild(content);
+  const dyn = new Container();
+
+  const CARD_X = 34;
+  const CARD_Y = 138;
+  const CARD_W = WORLD_W - 68;
+
+  function positionDom()       {
+    if (!input || !dom) return;
+    const rect = app.canvas.getBoundingClientRect();
+    const s = world.scale.x;
+    input.style.left = `${rect.left + world.x + dom.x * s}px`;
+    input.style.top = `${rect.top + world.y + dom.y * s}px`;
+    input.style.width = `${dom.w * s}px`;
+    input.style.height = `${dom.h * s}px`;
+    input.style.fontSize = `${24 * s}px`;
+  }
+
+  function buildStatic()       {
+    const title = label(opts.mode === 'first' ? '연구원 등록' : '이름 바꾸기', 32, INK, { stroke: { color: 0xffffff, width: 6 } });
+    title.anchor.set(0.5, 0);
+    title.position.set(WORLD_W / 2, 36);
+    const sub = label(opts.mode === 'first' ? '유행음식 연구소에 오신 걸 환영해요' : '랭킹에 보이는 이름이에요', 15, MUTED);
+    sub.anchor.set(0.5, 0);
+    sub.position.set(WORLD_W / 2, 90);
+
+    const card = new Container();
+    card.position.set(CARD_X, CARD_Y);
+    const g = new Graphics();
+    g.roundRect(4, 7, CARD_W, 272, 26).fill({ color: INK, alpha: 0.26 });
+    g.roundRect(0, 0, CARD_W, 272, 26).fill({ color: PAPER }).stroke({ width: 3.5, color: INK });
+    // 머리띠
+    g.roundRect(0, 0, CARD_W, 46, 26).fill({ color: TOMATO });
+    g.rect(0, 26, CARD_W, 20).fill({ color: TOMATO });
+    g.moveTo(0, 46).lineTo(CARD_W, 46).stroke({ width: 3.5, color: INK });
+    g.roundRect(0, 0, CARD_W, 272, 26).stroke({ width: 3.5, color: INK });
+    // 사진 칸
+    g.roundRect(18, 64, 96, 112, 16).fill({ color: 0xfbe28a }).stroke({ width: 3, color: INK });
+    // 이름 밑줄
+    g.moveTo(130, 120).lineTo(CARD_W - 18, 120).stroke({ width: 3.5, color: INK });
+    // 바코드
+    for (let i = 0; i < 38; i++) {
+      const bw = i % 3 === 0 ? 4 : 2;
+      g.rect(18 + i * 7.4, 218, bw, 36).fill({ color: INK, alpha: 0.75 });
+    }
+    card.addChild(g);
+    const head = label('연구원증', 18, 0xffffff);
+    head.position.set(18, 11);
+    const no = label(`NO. ${cardNumber(opts.playerKey)}`, 14, 0xffffff);
+    no.anchor.set(1, 0);
+    no.position.set(CARD_W - 18, 15);
+    const photo = place(t.rabbit, 66, 124, 92);
+    const k1 = label('이름', 13, MUTED);
+    k1.position.set(130, 62);
+    const k2 = label('소속', 13, MUTED);
+    k2.position.set(130, 138);
+    const v2 = label('유행음식 연구소', 17, INK);
+    v2.position.set(130, 156);
+    card.addChild(head, no, photo, k1, k2, v2);
+    content.addChild(title, sub, card);
+
+    if (locked) {
+      const nm = label(opts.current, 24, INK);
+      nm.position.set(CARD_X + 130, CARD_Y + 84);
+      if (nm.width > CARD_W - 130 - 18) nm.scale.set((CARD_W - 130 - 18) / nm.width);
+      content.addChild(nm);
+    } else {
+      input = document.createElement('input');
+      input.type = 'text';
+      input.value = name;
+      input.maxLength = NICK_MAX + 4;
+      input.placeholder = '이름을 적어줘요';
+      input.setAttribute('aria-label', '닉네임');
+      Object.assign(input.style, { position: 'fixed', boxSizing: 'border-box', border: 'none', outline: 'none', background: 'transparent', color: '#3a2f28', fontFamily: FONT, padding: '0', margin: '0', zIndex: '10' }                                );
+      input.addEventListener('input', () => {
+        name = input?.value ?? '';
+        refresh();
+      });
+      document.body.appendChild(input);
+      dom = { x: CARD_X + 130, y: CARD_Y + 78, w: CARD_W - 130 - 56, h: 38 };
+      positionDom();
+    }
+    content.addChild(dyn);
+  }
+
+  function refresh()       {
+    dyn.removeChildren().forEach((c) => c.destroy({ children: true }));
+    const check = validateNick(name);
+    const shown = cleanNick(name);
+
+    if (!locked) {
+      const cnt = label(`${Array.from(shown).length} / ${NICK_MAX}`, 13, check.ok || shown.length === 0 ? MUTED : TOMATO);
+      cnt.anchor.set(1, 0);
+      cnt.position.set(CARD_X + CARD_W - 18, CARD_Y + 94);
+      dyn.addChild(cnt);
+    }
+
+    const msg = locked ? `${NICK_COOLDOWN_DAYS}일에 한 번만 바꿀 수 있어요\n${opts.lockedDays}일 뒤에 다시 바꿀 수 있어요` : !check.ok && shown.length > 0 ? NICK_MESSAGES[check.reason] : opts.mode === 'edit' ? `이름은 ${NICK_COOLDOWN_DAYS}일에 한 번 바꿀 수 있어요` : '';
+    if (msg) {
+      const m = label(msg, 14, !locked && !check.ok && shown.length > 0 ? TOMATO : MUTED, { align: 'center', lineHeight: 20 });
+      m.anchor.set(0.5, 0);
+      m.position.set(WORLD_W / 2, CARD_Y + 290);
+      dyn.addChild(m);
+    }
+
+    if (!locked) {
+      const dice = makeButton('랜덤 이름', 170, 46, CREAM, () => {
+        name = randomNick();
+        if (input) input.value = name;
+        refresh();
+      });
+      dice.position.set((WORLD_W - 170) / 2, 504);
+      dyn.addChild(dice);
+    }
+
+    const ok = locked ? true : check.ok;
+    const main = makeButton(locked ? '돌아가기' : opts.mode === 'first' ? '등록하기' : '저장', WORLD_W - 48, 58, ok ? BUTTER : CREAM, () => {
+      if (locked) return finish(null);
+      const c = validateNick(name);
+      if (!c.ok) {
+        refresh();
+        return;
+      }
+      finish({ name: c.name, custom: true });
+    });
+    if (!ok) main.alpha = 0.7;
+    main.position.set(24, WORLD_H - 112);
+    dyn.addChild(main);
+
+    if (!locked) {
+      const skip = label(opts.mode === 'first' ? '지금은 건너뛸래요' : '취소', 15, MUTED);
+      skip.anchor.set(0.5);
+      skip.position.set(WORLD_W / 2, WORLD_H - 28);
+      skip.eventMode = 'static';
+      skip.cursor = 'pointer';
+      skip.hitArea = { contains: (px        , py        ) => Math.abs(px) < 90 && Math.abs(py) < 20 };
+      skip.on('pointertap', () => {
+        if (opts.mode === 'first') {
+          const c = validateNick(opts.current);
+          finish({ name: c.ok ? c.name : randomNick(), custom: false });
+        } else finish(null);
+      });
+      const line = new Graphics();
+      line.moveTo(-skip.width / 2, 11).lineTo(skip.width / 2, 11).stroke({ width: 1.5, color: MUTED });
+      skip.addChild(line);
+      dyn.addChild(skip);
+    }
+  }
+
+  function finish(r            )       {
+    if (disposed) return;
+    platform.haptics.tap(r ? 'success' : 'light');
+    onDone(r);
+  }
+
+  function layout()       {
+    backdrop.layout();
+    fitWorld(world, app.screen.width, app.screen.height, platform.safeArea.insets());
+    positionDom();
+  }
+  layout();
+  app.renderer.on('resize', layout);
+  buildStatic();
+  refresh();
+
+  return () => {
+    disposed = true;
+    input?.remove();
+    input = null;
+    app.renderer.off('resize', layout);
+    backdrop.destroy();
+    root.destroy({ children: true });
+  };
+}
+
 // spike/src/boardScene.ts
 
                                                         
@@ -3328,6 +3639,8 @@ const SHEET_TOP = 424;
                                                            
                             
                  
+                        
+                       
                   
                                      
  
@@ -3664,6 +3977,17 @@ async function showHome(app             , platform                 , t          
       total.position.set(WORLD_W / 2, topY + 32 + 3 * 51 + 8 + 60);
       content.addChild(total);
     }
+
+    // 내 이름 바꾸기
+    const rn = label(`내 이름  ${ranking.myName}  ·  바꾸기`, 13, MUTED);
+    rn.anchor.set(0.5);
+    rn.position.set(WORLD_W / 2, 603);
+    if (rn.width > innerW) rn.scale.set(innerW / rn.width);
+    rn.eventMode = 'static';
+    rn.cursor = 'pointer';
+    rn.hitArea = { contains: (px        , py        ) => Math.abs(px) < innerW / 2 / rn.scale.x && Math.abs(py) < 16 };
+    rn.on('pointertap', () => ranking.onRename());
+    content.addChild(rn);
 
     // 도전 버튼
     let btn           ;
@@ -4519,13 +4843,14 @@ const ASSET_URLS = {"board":"data:image/webp;base64,UklGRshlAABXRUJQVlA4WAoAAAAQ
       autoDensity: true
     });
     stageEl.appendChild(app.canvas);
-    try { await Promise.race([document.fonts.load('20px Jua', "가각간갈감값갔같개갱거건걸검것게겨격결겹겼경계고골공과관광괜구국규균그근글금기긴길김까깐깜깥깨깬깸껑꼬꼴꾸꾹꿔뀌뀐뀔끄끈끌끝끼낌나난날남났낮내낸낼너넘넣네노녹높놓누눌뉴느는늘능늬니다단닫달담답당닿대댑더던덜덩덮데델도돌동돼됐되된될두둘둥둬뒤드득든들듦등디딩따딸때땐떡떤떨떼또똑뚜뜨띠라락란람랑래랫랭량러럼럽렀렁레렌려력렬렵렸례로록롬료루뤄류르른를름릇리릭린릴림릿링마막만많말맛맞맡매머먼멀멈메며면명몇모목몰몸못무묶문물뭉뭐미밀밑바박밖반받발밝방배백버번범벗벤벽별보복본볼봉봐봤부분불붙브블비빈빌빛빠빡빨빼뽑뿌사산살상새색샘서석섞선설성세셀션셰소속손쇠수순숟숨숫쉬스습시식신실싸쌀쌓써썼쑥쓰쓱쓸씨씩아안앉않알앗았앞앱야약양어얼업없었에엔엣여역연열영옅옆예오온올옮옵와완왕외왼요용우욱운울움워원월웠웹위유율으은을음응의이인일읽임입있잉잎자작잘잠잡장저적전절점접젓정제져졌조존좁종좋좌주죽준줄줌중줘줬즉즘지직진질짐집짜짝짧째쩍쪄쪽쫀쭈쭉찌찍찜차착찮참찹창찾채책처척천첫청체쳐초촘최추출충춰측치칙친칩카칸캐커컬켜코콜콤쿠퀴크큰큼키킹타탁탄탕태택탭탰터테텍템텝토톡통투튀트튼틀티팅파판팔패퍼퍽페편펼평포폭폼퐁표품풍프플피픽하한할함합항해했행향허험헤혀현형호홈화확환황회획횟효후휘흉흐흑흔히힌0123456789,.!?:/×★✓"), new Promise(function (r) { setTimeout(r, 3000); })]); } catch (e) {}
+    try { await Promise.race([document.fonts.load('20px Jua', "가각간갈감값갔같개갱거건걸검것게겨격결겹겼경계고골곳공과관광괜교구국규균그근글금기긴길김깃까깐깜깥깨깬깸꺼껑꼬꼴꾸꾹꿀꿔뀌뀐뀔끄끈끌끝끼낌나난날남났낮내낸낼너넘넣네녀년노녹놈높놓누눌뉴느는늘능늦늬니닉다단닫달담답당닿대댑더던덜덤덩덮데델도독돌동돼됐되된될두둘둥둬뒀뒤드득든들듦등디딩따딸때땐떡떤떨떼또똑뚜뛰뛸뜨띄띠라락란랄람랑래랜랫랭량러럼럽렀렁레렌려력렬렵렸례로록롬롱료루룹뤄류르른를름릇리릭린릴림릿링마막만많말맛맞맡매머먹먼멀멈메며면명몇모목몰몸못무묶문물뭉뭐미밀밑바박밖반받발밝방배백버번범벗벤벽별병보복본볼봉봐봤부분불붕붙브블비빈빌빙빛빠빡빨빵빼뽑뿌사삭산살상새색샘서석섞선설성세섹셀션셰소속손솔쇠수순숟숨숫쉬스슨습시식신실심싸쌀쌉쌓썅써썼쑥쓰쓱쓸씨씩아안앉않알앗았앞애앱야약양어얼업없었에엔엣여역연열엿영옅옆예오온올옮옵와완왕외왼요욕용우욱운울움워원월웠웹위유율으은을음응의이익인일읽임입있잉잎자작잘잠잡장저적전절점접젓정제져졌조존좁종좆좋좌주죽준줄줌중줘줬즉즘증지직진질짐집짜짝짧째쩍쪄쪽쫀쫄쭈쭉찌찍찜차착찮참찹창찾채책처척천첫청체쳐초촉촘최추출충춰취측치칙친칩카칸캐커컬켜코콘콜콤쿠퀴크큰큼키킹타탁탄탕태택탭탰터텀테텍템텝토톡통투튀트튼틀티팅파판팔팥패퍼퍽페편펼평포폭폼퐁표품풍프플피픽필하한할함합항해했행향허험헤혀현형호홈화확환황회획횟효후휘흉흐흑흔히힌힣0123456789,.!?:/×★✓"), new Promise(function (r) { setTimeout(r, 3000); })]); } catch (e) {}
     var T = await loadAll(ASSET_URLS);
     var login = await platform.user.login();
     var localRequests = createLocalRequestsRepo(platform.storage, function () { return platform.serverTime.now(); }, SAMPLE_REQUESTS);
     var requests = withFallback(createSupabaseRequestsRepo(SUPABASE, login.playerKey), localRequests);
-    var myName = login.displayName || '연구원';
-    var boards = withBoardFallback(createSupabaseBoardRepo(SUPABASE, login.playerKey, myName), createLocalBoardRepo(platform.storage, myName, SAMPLE_BOARD));
+    var nick = parseNick(await platform.storage.get(NICK_KEY));
+    function nameNow() { return nick ? nick.name : (login.displayName || '연구원'); }
+    var boards = withBoardFallback(createSupabaseBoardRepo(SUPABASE, login.playerKey, nameNow), createLocalBoardRepo(platform.storage, nameNow, SAMPLE_BOARD));
     var FOODS = [{ id: 'mochi', name: '초코 딸기 모찌', released: true }, { id: 'dalgona', name: '달고나 커피', released: false }];
     var dispose = function () {};
     var switching = false;
@@ -4544,7 +4869,7 @@ const ASSET_URLS = {"board":"data:image/webp;base64,UklGRshlAABXRUJQVlA4WAoAAAAQ
       return { day: day, food: dailyFood(day, FOODS.filter(function (f) { return f.released; }).map(function (f) { return f.id; })) };
     }
     function rankingDeps(startTab) {
-      return { boards: boards, foods: FOODS, startTab: startTab, myName: myName, onDaily: function () { goGame(true); }, onBoard: function (sel) { goBoard(sel); } };
+      return { boards: boards, foods: FOODS, startTab: startTab, get myName() { return nameNow(); }, onRename: function () { goNick('edit', function () { goHome('rank'); }); }, onDaily: function () { goGame(true); }, onBoard: function (sel) { goBoard(sel); } };
     }
     function goHome(tab) {
       return swap(function () { return showHome(app, platform, T, requests, rankingDeps(tab || 'book'), function () { goGame(false); }, function (start) { goRequest(start); }); });
@@ -4552,14 +4877,28 @@ const ASSET_URLS = {"board":"data:image/webp;base64,UklGRshlAABXRUJQVlA4WAoAAAAQ
     function goRequest(start) {
       return swap(function () { return showRequests(app, platform, T, requests, start, function () { goHome('book'); }); });
     }
+    async function goNick(mode, next) {
+      var now = await platform.serverTime.now();
+      var st = changeStatus(nick, now);
+      return swap(function () {
+        return showNickname(app, platform, T, { mode: mode, current: nick ? nick.name : randomNick(), playerKey: login.playerKey, lockedDays: st.ok ? 0 : st.daysLeft }, function (r) {
+          if (r) {
+            nick = { name: r.name, changedAt: r.custom ? now : null };
+            platform.storage.set(NICK_KEY, serializeNick(nick));
+          }
+          next();
+        });
+      });
+    }
     async function goGame(isDaily) {
+      if (!nick) return goNick('first', function () { goGame(isDaily); });
       var info = isDaily ? await todayInfo() : null;
       return swap(function () { return startMochiGame(app, platform, T, boards, info, function () { goHome(isDaily ? 'rank' : 'book'); }, function () { goBoard({ chip: 'daily', period: 'today' }); }); });
     }
     async function goBoard(sel) {
       var info = await todayInfo();
       var left = attemptsLeft(parseDaily(await platform.storage.get(DAILY_KEY), info.day));
-      return swap(function () { return showBoard(app, platform, boards, { day: info.day, foods: FOODS, dailyFood: info.food, attemptsLeft: left, myName: myName, onExit: function () { goHome('rank'); }, onDaily: function () { goGame(true); } }, sel); });
+      return swap(function () { return showBoard(app, platform, boards, { day: info.day, foods: FOODS, dailyFood: info.food, attemptsLeft: left, myName: nameNow(), onExit: function () { goHome('rank'); }, onDaily: function () { goGame(true); } }, sel); });
     }
     await goHome('book');
     status.hidden = true;
