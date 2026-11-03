@@ -3223,7 +3223,7 @@ async function showNickname(app             , platform                 , t      
     input.style.top = `${rect.top + world.y + dom.y * s}px`;
     input.style.width = `${dom.w * s}px`;
     input.style.height = `${dom.h * s}px`;
-    input.style.fontSize = `${24 * s}px`;
+    input.style.fontSize = `${20 * s}px`;
   }
 
   function buildStatic()       {
@@ -3270,8 +3270,8 @@ async function showNickname(app             , platform                 , t      
     content.addChild(title, sub, card);
 
     if (locked) {
-      const nm = label(opts.current, 24, INK);
-      nm.position.set(CARD_X + 130, CARD_Y + 84);
+      const nm = label(opts.current, 20, INK);
+      nm.position.set(CARD_X + 130, CARD_Y + 86);
       if (nm.width > CARD_W - 130 - 18) nm.scale.set((CARD_W - 130 - 18) / nm.width);
       content.addChild(nm);
     } else {
@@ -4900,7 +4900,8 @@ const ASSET_URLS = {"board":"data:image/webp;base64,UklGRshlAABXRUJQVlA4WAoAAAAQ
       var left = attemptsLeft(parseDaily(await platform.storage.get(DAILY_KEY), info.day));
       return swap(function () { return showBoard(app, platform, boards, { day: info.day, foods: FOODS, dailyFood: info.food, attemptsLeft: left, myName: nameNow(), onExit: function () { goHome('rank'); }, onDaily: function () { goGame(true); } }, sel); });
     }
-    await goHome('book');
+    if (!nick) await goNick('first', function () { goHome('book'); });
+    else await goHome('book');
     status.hidden = true;
   })().catch(function (error) { console.error(error); fail('시작하지 못했어요: ' + error); });
 })();
