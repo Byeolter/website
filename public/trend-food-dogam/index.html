@@ -1498,6 +1498,14 @@ function fitWorld(world           , screenW        , screenH        , insets    
   return x;
 }
 
+/** 글자를 입력하는 동안(키보드가 올라와 화면이 낮아졌을 때)에는 크기를 줄이지 않고, 위쪽을 기준으로 붙여서 입력 칸이 보이게 해요. */
+function fitWorldTyping(world           , screenW        , screenH        , insets                                                              , scale        )       {
+  const w = screenW - insets.left - insets.right;
+  const h = screenH - insets.top - insets.bottom;
+  world.scale.set(scale);
+  world.position.set(insets.left + (w - WORLD_W * scale) / 2, insets.top + Math.max(0, (h - WORLD_H * scale) / 2));
+}
+
 /** 빨간 체크무늬 식탁보 배경. 월드 바깥 여백까지 화면 전체를 덮어요. */
 function createBackdrop(app             )                                                    {
   const node = new Sprite();
@@ -2748,6 +2756,8 @@ async function showRequests(
   let sentMerged = false;
   let busy = false;
   let disposed = false;
+  // 키보드가 올라와 화면이 낮아져도 전체가 작아지지 않게, 입력 중에는 크기를 고정해요.
+  let typingScale                = null;
   let doms                                                                                               = [];
   const rebuild = ()       => {
     setTimeout(() => {
@@ -2767,6 +2777,7 @@ async function showRequests(
   function clearDom()       {
     for (const d of doms) d.el.remove();
     doms = [];
+    typingScale = null;
   }
 
   /** 월드 좌표의 사각형 위에 입력창을 겹쳐요. 화면 크기가 바뀌면 layout()에서 다시 맞춰요. */
@@ -2791,6 +2802,15 @@ async function showRequests(
       zIndex: '10',
     }                                );
     el.dataset.size = String(size);
+    el.addEventListener('focus', () => {
+      typingScale = world.scale.x;
+    });
+    el.addEventListener('blur', () => {
+      typingScale = null;
+      setTimeout(() => {
+        if (!disposed) layout();
+      }, 0);
+    });
     el.addEventListener('input', () => onInput(el.value));
     document.body.appendChild(el);
     doms.push({ el, x, y, w, h });
@@ -3152,7 +3172,8 @@ async function showRequests(
 
   function layout()       {
     backdrop.layout();
-    fitWorld(world, app.screen.width, app.screen.height, platform.safeArea.insets());
+    if (typingScale !== null) fitWorldTyping(world, app.screen.width, app.screen.height, platform.safeArea.insets(), typingScale);
+    else fitWorld(world, app.screen.width, app.screen.height, platform.safeArea.insets());
     positionDom();
   }
   layout();
@@ -3200,6 +3221,8 @@ async function showNickname(app             , platform                 , t      
   let disposed = false;
   let input                          = null;
   let dom                                                        = null;
+  // 키보드가 올라와 화면이 낮아져도 전체가 작아지지 않게, 입력 중에는 크기를 고정해요.
+  let typingScale                = null;
 
   const root = new Container();
   app.stage.addChild(root);
@@ -3282,6 +3305,18 @@ async function showNickname(app             , platform                 , t      
       input.placeholder = '이름을 적어줘요';
       input.setAttribute('aria-label', '닉네임');
       Object.assign(input.style, { position: 'fixed', boxSizing: 'border-box', border: 'none', outline: 'none', background: 'transparent', color: '#3a2f28', fontFamily: FONT, padding: '0', margin: '0', zIndex: '10' }                                );
+      input.addEventListener('focus', () => {
+        typingScale = world.scale.x;
+      });
+      input.addEventListener('blur', () => {
+        typingScale = null;
+        setTimeout(() => {
+          if (!disposed) layout();
+        }, 0);
+      });
+      input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') input?.blur();
+      });
       input.addEventListener('input', () => {
         name = input?.value ?? '';
         refresh();
@@ -3365,7 +3400,8 @@ async function showNickname(app             , platform                 , t      
 
   function layout()       {
     backdrop.layout();
-    fitWorld(world, app.screen.width, app.screen.height, platform.safeArea.insets());
+    if (typingScale !== null) fitWorldTyping(world, app.screen.width, app.screen.height, platform.safeArea.insets(), typingScale);
+    else fitWorld(world, app.screen.width, app.screen.height, platform.safeArea.insets());
     positionDom();
   }
   layout();
