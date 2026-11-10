@@ -5,7 +5,7 @@
   var lastTrigger = null;
 
   var covers = {
-    templemoa: { img: 'assets/tm-feature.webp' },
+    templemoa: { img: 'assets/tm-graphic.webp' },
     dognal: { bg: 'linear-gradient(160deg,#e3f5ee,#bfe6d8)', icon: 'assets/icon-dognal.webp' },
     shortsguard: { bg: 'linear-gradient(160deg,#232b44,#0f1424)', icon: 'assets/icon-shortsguard.webp' },
     missions: { bg: 'linear-gradient(135deg,#3ec5a8,#2a8fbd)', text: 'Compose · MVVM' },

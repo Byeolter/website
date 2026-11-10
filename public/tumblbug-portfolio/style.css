@@ -24,10 +24,9 @@ img{max-width:100%;height:auto;display:block}
 .header{position:sticky;top:0;background:rgba(255,255,255,.96);backdrop-filter:blur(8px);z-index:30;border-bottom:1px solid var(--line)}
 .header .wrap{display:flex;align-items:center;gap:28px;height:68px}
 @font-face{font-family:'Playfair Display';font-style:italic;font-weight:700;font-display:swap;src:url(assets/playfair-700i.woff2) format('woff2')}
-.brand{font-family:'Playfair Display',Georgia,serif;font-style:italic;font-weight:700;font-size:30px;letter-spacing:-.01em;color:var(--text);line-height:1;padding-bottom:12px}
+.brand{font-family:'Playfair Display',Georgia,serif;font-style:italic;font-weight:700;font-size:30px;letter-spacing:-.01em;color:var(--text);line-height:1;padding-bottom:10px}
 .brand .u{position:relative;display:inline-block}
-.brand .u::before{content:'';position:absolute;left:50%;transform:translateX(-50%);bottom:-.1em;width:.5em;height:.3em;background:#1a1a1a;border-radius:55% 55% 50% 50%/45% 45% 60% 60%}
-.brand .u::after{content:'';position:absolute;left:50%;transform:translateX(-50%);bottom:-.46em;width:1em;height:.26em;border-bottom:.09em solid #1a1a1a;border-radius:0 0 50% 50%}
+.brand .u::after{content:'';position:absolute;left:50%;transform:translateX(-50%);bottom:-.2em;width:.7em;height:.16em;border-bottom:.085em solid #1a1a1a;border-radius:0 0 50% 50%}
 .nav{display:flex;gap:22px;font-weight:600;font-size:15px}
 .nav a{padding:6px 0;border-bottom:2px solid transparent}
 .nav a:hover{border-color:var(--text)}
@@ -114,8 +113,8 @@ dialog::backdrop{background:rgba(0,0,0,.5)}
 .dlg-body .links{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
 .dlg-body .links a{border:1px solid var(--text);border-radius:999px;padding:8px 16px;font-weight:700;font-size:13.5px}
 .dlg-body .links a:hover{background:var(--text);color:#fff}
-.gallery{display:grid;grid-auto-flow:column;grid-auto-columns:42%;gap:10px;overflow-x:auto;margin:18px 0 4px;padding-bottom:6px;scroll-snap-type:x proximity}
-.gallery img{width:100%;height:auto;border-radius:10px;border:1px solid var(--line);scroll-snap-align:start}
+.gallery{display:flex;gap:10px;overflow-x:auto;margin:18px 0 4px;padding-bottom:8px;scroll-snap-type:x proximity}
+.gallery img{flex:0 0 auto;height:360px;width:auto;border-radius:10px;border:1px solid var(--line);scroll-snap-align:start}
 .note{font-size:12.5px;color:var(--muted);margin-top:14px}
 
 a:focus-visible,button:focus-visible{outline:3px solid #6a5cff;outline-offset:2px;border-radius:6px}
