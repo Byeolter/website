@@ -115,6 +115,7 @@ dialog::backdrop{background:rgba(0,0,0,.5)}
 .dlg-body .links a:hover{background:var(--text);color:#fff}
 .gallery{display:flex;gap:10px;overflow-x:auto;margin:18px 0 4px;padding-bottom:8px;scroll-snap-type:x proximity}
 .gallery img{flex:0 0 auto;height:360px;width:auto;border-radius:10px;border:1px solid var(--line);scroll-snap-align:start}
+.gallery.single img{height:auto;width:100%}
 .note{font-size:12.5px;color:var(--muted);margin-top:14px}
 
 a:focus-visible,button:focus-visible{outline:3px solid #6a5cff;outline-offset:2px;border-radius:6px}
