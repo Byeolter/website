@@ -9,7 +9,7 @@
     dognal: { bg: 'linear-gradient(160deg,#e3f5ee,#bfe6d8)', icon: 'assets/icon-dognal.webp' },
     shortsguard: { bg: 'linear-gradient(160deg,#232b44,#0f1424)', icon: 'assets/icon-shortsguard.webp' },
     missions: { bg: 'linear-gradient(135deg,#3ec5a8,#2a8fbd)', text: 'Compose · MVVM' },
-    whomadethis: { bg: 'linear-gradient(135deg,#6b1f4f,#e8445f)', text: 'Who Made This' }
+    whomadethis: { img: 'assets/whomade-web.webp' }
   };
 
   function openProject(key, trigger) {
