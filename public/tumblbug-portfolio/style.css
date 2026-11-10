@@ -24,9 +24,9 @@ img{max-width:100%;height:auto;display:block}
 .header{position:sticky;top:0;background:rgba(255,255,255,.96);backdrop-filter:blur(8px);z-index:30;border-bottom:1px solid var(--line)}
 .header .wrap{display:flex;align-items:center;gap:28px;height:68px}
 @font-face{font-family:'Playfair Display';font-style:italic;font-weight:700;font-display:swap;src:url(assets/playfair-700i.woff2) format('woff2')}
-.brand{font-family:'Playfair Display',Georgia,serif;font-style:italic;font-weight:700;font-size:30px;letter-spacing:-.01em;color:var(--text);line-height:1;padding-bottom:6px}
+.brand{font-family:'Playfair Display',Georgia,serif;font-style:italic;font-weight:700;font-size:30px;letter-spacing:-.01em;color:var(--text);line-height:1;padding-bottom:12px}
 .brand .u{position:relative;display:inline-block}
-.brand .u::after{content:'';position:absolute;left:-.12em;right:-.04em;bottom:-.2em;height:.24em;border-bottom:.1em solid var(--accent);border-radius:0 0 50% 50%}
+.brand .u::after{content:'';position:absolute;left:50%;transform:translateX(-50%);bottom:-.4em;width:1.05em;height:.42em;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 14'%3E%3Cpath d='M20 0V5M20 5Q15.5 11.5 7 7.5M20 5Q24.5 11.5 33 7.5' fill='none' stroke='%231a1a1a' stroke-width='2.6' stroke-linecap='round'/%3E%3C/svg%3E") center/contain no-repeat}
 .nav{display:flex;gap:22px;font-weight:600;font-size:15px}
 .nav a{padding:6px 0;border-bottom:2px solid transparent}
 .nav a:hover{border-color:var(--text)}
