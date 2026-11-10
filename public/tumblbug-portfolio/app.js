@@ -6,10 +6,10 @@
 
   var covers = {
     templemoa: { img: 'assets/tm-feature.webp' },
-    dognal: { bg: 'linear-gradient(135deg,#ffb36b,#ff7a59)', text: 'Dognal 도그널' },
-    shortsguard: { bg: 'linear-gradient(135deg,#2b2d42,#5c5f7a)', text: '쇼츠 그만 댓글 그만' },
+    dognal: { bg: 'linear-gradient(160deg,#e3f5ee,#bfe6d8)', icon: 'assets/icon-dognal.webp' },
+    shortsguard: { bg: 'linear-gradient(160deg,#232b44,#0f1424)', icon: 'assets/icon-shortsguard.webp' },
     missions: { bg: 'linear-gradient(135deg,#3ec5a8,#2a8fbd)', text: 'Compose · MVVM' },
-    whomadethis: { bg: 'linear-gradient(135deg,#ffd56b,#ff8fb1)', text: 'Who Made This' }
+    whomadethis: { bg: 'linear-gradient(135deg,#6b1f4f,#e8445f)', text: 'Who Made This' }
   };
 
   function openProject(key, trigger) {
@@ -26,7 +26,12 @@
       var ph = document.createElement('div');
       ph.className = 'ph-big';
       ph.style.background = c.bg || '#ddd';
-      ph.textContent = c.text || '';
+      if (c.icon) {
+        var ic = document.createElement('img');
+        ic.src = c.icon;
+        ic.alt = '';
+        ph.appendChild(ic);
+      } else ph.textContent = c.text || '';
       head.appendChild(ph);
     }
     var x = document.createElement('button');
